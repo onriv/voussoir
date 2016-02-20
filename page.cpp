@@ -119,6 +119,7 @@ IplImage *BookImage::create_page_image(
             static_cast<int>(page_height_px + 0.5));
 
     //std::printf("%4.2f %4.2f\n", page_width_px, page_height_px);
+    //std::cout << "THIS IS A TEST \n";
 
     // Convert marker positions to pixel representation.
     std::map<int, CvPoint2D32f> dst_markers_px;
