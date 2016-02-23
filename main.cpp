@@ -56,9 +56,9 @@ void process_image(IplImage *src_img,
 
 int main(int argc, char **argv)
 {
-    // Configure left page.
+    // Configure left page. Glyph '0' is expected to be in the top left corner of the page. Glyph '1' is expected to be in the top right corner, etc. going clockwise.
     std::map<int, CvPoint2D32f> left_dst_markers;
-    left_dst_markers[0] = cvPoint2D32f(0.00, 0.00);
+    left_dst_markers[0] = cvPoint2D32f(0.00, 0.00);    
     left_dst_markers[1] = cvPoint2D32f(6.00, 0.00);
     left_dst_markers[2] = cvPoint2D32f(6.00, 9.50);
     left_dst_markers[3] = cvPoint2D32f(0.00, 9.50);
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     left_layout.page_bottom = 9.20;
     left_layout.dpi = 600.0;
 
-    // Configure right page.
+    // Configure right page. Similar to the left page, Glyph '4' is expected to be in the top left corner of the page, with each higher-numbered glyph in the next corner, going around the page clockwise.
     std::map<int, CvPoint2D32f> right_dst_markers;
     right_dst_markers[4] = cvPoint2D32f(0.00, 0.00);
     right_dst_markers[5] = cvPoint2D32f(6.00, 0.00);
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
         }
 
         cvReleaseImage(&src_img);
-    } else {
+    } else { // Open debugging windows
         // Create windows.
         cvNamedWindow("Source", 0);
         cvResizeWindow("Source", 480, 640);
@@ -125,7 +125,8 @@ int main(int argc, char **argv)
         const double scale = 1.0;
         cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH, 1600 * scale);
         cvSetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT, 1200 * scale);
-
+        
+        // Process the pages in real-time, displaying the output.
         while (cvWaitKey(10) < 0) {
             IplImage *src_img = cvQueryFrame(capture);
             cvShowImage("Source", src_img);
