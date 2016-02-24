@@ -110,6 +110,7 @@ Save it as an application and invoke it using Folder Actions. For a screenshot o
 	* Show page width and height (perhaps with a `--verbose / -v` flag)
 * Establish a build process to allow distributing ready-to-use binaries for different platforms (including the major Linux distros 32- and 64-bit, OSX 64-bit, and Windows)
 * **Get more people on board!** I (Jacob) am not a C++ developer, so I see my role as primarily custodial right now (i.e., working on documentation and community-building).
+* Craft a more accurate, clever, and less generic name for the program.
 
 # Contributors
 
