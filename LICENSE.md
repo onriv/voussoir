@@ -1,4 +1,4 @@
-Copyright (c) 2012, 2016, Yutaka Tsutano
+Copyright (c) 2012, 2016, Yutaka Tsutano  
 Portions copyright 2016, Jacob Levernier
 
 Permission to use, copy, modify, and/or distribute this software for any
