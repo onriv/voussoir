@@ -17,6 +17,9 @@
 #include <iostream>
 #include <map>
 
+//#include <cstring>
+//#include <stdio.h>
+
 #include "page.h"
 #include "marker.h"
 
@@ -134,8 +137,8 @@ IplImage *BookImage::create_page_image(
             static_cast<int>(page_width_px + 0.5),
             static_cast<int>(page_height_px + 0.5));
 
-    //std::printf("%4.2f %4.2f\n", page_width_px, page_height_px);
-    //std::cout << "THIS IS A TEST \n";
+    // For debugging, uncomment the line below to see page width and height.
+    //std::cout << "Page width: " << page_width_px << "; Page height: " << page_height_px << "\n";
 
     // Convert marker positions to pixel representation.
     std::map<int, CvPoint2D32f> dst_markers_px;
