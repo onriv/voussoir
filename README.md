@@ -15,7 +15,7 @@ The program takes images like this:
 
 And turns them into images like this:
 
-<a href="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_input.jpg" style="
+<a href="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_output_left_page.jpg" style="
 	display: inline-block;
 	float: left;
 	padding-right: 1em;
@@ -23,7 +23,7 @@ And turns them into images like this:
 	<img src="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_output_left_page.jpg" alt="[De-keystoned left page]" height="256px">
 </a>
 
-<a href="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_input.jpg" style="
+<a href="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_output_right_page.jpg" style="
 	display: inline-block;
 	float: left;
 	">
