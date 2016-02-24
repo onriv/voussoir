@@ -47,7 +47,7 @@ Mr. Tsutano noted in the code's original readme that "this program was written i
 Install OpenCV and SCons:
 
 * **MacPorts:** `sudo port install opencv scons`
-* Linux:
+* **Linux:**
 	* **openSUSE**: `sudo zypper install opencv scons libopencv2_4 opencv-devel`
 
 *\[If you successfully build the program on another system, please let me know, and I'll add the required packages here.]*
@@ -126,7 +126,7 @@ Save it as an application and invoke it using Folder Actions. For a screenshot o
 ### More on Book Scanning
 
 * If you're interested in building some **hardware** to flatten the pages of the book, I recommend exploring the [DIYBookScanner.org gallery and forums](http://diybookscanner.org/intro.html "DIYBookScanner.org: Gallery"). An especially popular and easy-to-build model was created by a gentleman named David Landin in 2013 out of **PVC plumbing pipe,** and can be viewed [here](http://diybookscanner.org/forum/viewtopic.php?f=14&t=2914 "DIYBookScanner.org: David Landin model").
-* Additionally, the founder of the DIYBookScanning community, [Daniel Reetz](http://www.danreetz.com/ "Daniel Reetz"), wrote an extensive [monograph](http://diybookscanner.org/archivist "DIYBookScanner.org: The Archivist") on DIY scanning hardware in 2015, when he retired from the project (see also [Mr. Reetz' blog post](http://www.danreetz.com/blog/2015/12/31/internet-dan-seems-to-be-dead/ "Daniel Reetz: 'Internet Dan Seems to be Dead'") about the site. Mr. Reetz' expertise on the topic is unmatched; his monograph is, in my opinion, the single best place to begin learning about DIY scanners (after the [DIYBookScanner.org gallery](http://diybookscanner.org/intro.html "DIYBookScanner.org: Gallery") linked above).
+* Additionally, the founder of the DIYBookScanning community, [Daniel Reetz](http://www.danreetz.com/ "Daniel Reetz"), wrote an extensive [monograph](http://diybookscanner.org/archivist "DIYBookScanner.org: The Archivist") on DIY scanning hardware in 2015, when he retired from the project (see also [Mr. Reetz' blog post](http://www.danreetz.com/blog/2015/12/31/internet-dan-seems-to-be-dead/ "Daniel Reetz: 'Internet Dan Seems to be Dead'") about the site). Mr. Reetz' expertise on the topic is unmatched; his monograph is, in my opinion, the single best place to begin learning about DIY scanners (after the [DIYBookScanner.org home page](http://diybookscanner.org "DIYBookScanner.org: Home Page") and [gallery](http://diybookscanner.org/intro.html "DIYBookScanner.org: Gallery") linked above).
 * If you're interested in post-processing for your book photos (e.g., white-balance correcting, further automatic cropping, etc., the output from this program can be used as input for **[ScanTailor](http://scantailor.org/ "ScanTailor"),** which is also free and open-source.
 
 # Todo
