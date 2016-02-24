@@ -9,13 +9,26 @@ This program takes images of books (each picture including a two-page spread), d
 
 The program takes images like this:
 
-![\[Keystoned image example\]](https://raw.githubusercontent.com/publicus/bookscan/master/build/test_input.jpg "Keystoned image example")
+<a href="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_input.jpg" >
+	<img src="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_input.jpg" alt="[Keystoned image example]" height="256px">
+</a>
 
 And turns them into images like this:
 
-![\[De-keystoned left page\]](https://raw.githubusercontent.com/publicus/bookscan/master/build/test_output_left_page.jpg "De-keystoned left page")
+<a href="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_input.jpg" style="
+	display: inline-block;
+	float: left;
+	padding-right: 1em;
+	">
+	<img src="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_output_left_page.jpg" alt="[De-keystoned left page]" height="256px">
+</a>
 
-![\[De-keystoned right page\]](https://raw.githubusercontent.com/publicus/bookscan/master/build/test_output_right_page.jpg "De-keystoned right page")
+<a href="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_input.jpg" style="
+	display: inline-block;
+	float: left;
+	">
+	<img src="https://raw.githubusercontent.com/publicus/bookscan/master/build/test_output_right_page.jpg" alt="[De-keystoned right page]" height="256px">
+</a>
 
 # Background
 
