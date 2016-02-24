@@ -7,7 +7,7 @@ This program takes images of books (each picture including a two-page spread), d
 
 # Background
 
-This program was written as part of a one-day build in 2012 by [Yutaka Tsutano](http://yutaka.tsutano.com "Yutaka Tsutano's website"). Videos of Mr. Tsutano's prototype book scanner build and software tests are available here:
+This program was written as part of a one-day build in 2012 by [Yutaka Tsutano](http://yutaka.tsutano.com/projects/others/ "Yutaka Tsutano's website"). Videos of Mr. Tsutano's prototype book scanner build and software tests are available here:
 
 * [Book Scanner: First Prototype](http://www.youtube.com/watch?v=rjzxlA9RWio)
 * [Book Scanner: Marker Test](http://www.youtube.com/watch?v=YXANjnry6CU)
