@@ -13,7 +13,7 @@ The program takes images like this:
 	<img src="build/test_input.jpg" alt="[Keystoned image example]" height="256px">
 </a>
 
-And turns them into images like this:
+And turns them into images like these:
 
 <a href="build/test_output_left_page.jpg" style="
 	display: inline-block;
