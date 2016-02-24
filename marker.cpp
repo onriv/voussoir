@@ -20,8 +20,16 @@
 
 int decode_marker(CvMat *mark_mat, marker_rotation_t &rotation)
 {
+	/*
+	An explanation of cvmGet(mark_mat, i, j) below, throughout this file:
+	
+	mark_mat is the 6x6 matrix of pixels for each glyph. Some are black ('< 0.5' in the code below), and some are white ('> 0.5' in the code below).
+	
+	Position i,j (e.g., '2' and '3' in 'cvmGet(mark_mat, 2, 3)') represents a Y-coordinate (counting from top) and an X-coordinate (counting from left). The glyphs are each a 6x6 grid/matrix (two outer rows, with a 4x4 matrix in the center showing the glyph's unique mark). Thus, position (1,1) = top left of outer border, (1,6) = top right of outer border, etc.
+	*/
+	
     // Make sure that the outermost cells are black (< 0.5 = black, > 0.5 = white).
-    // (The glyphs' outside edges are a 6x1 matrix, so 6x6 coordinates are available overall. This iterates over the perimeter.
+    // (The glyphs' outside edges are a 6x1 matrix, so 6x6 coordinates are available overall. This iterates over the perimeter.)
     for (int i = 0; i < 6; i++) {
         if (cvmGet(mark_mat, i, 0) > 0.5
                     || cvmGet(mark_mat, i, 5) > 0.5
@@ -48,7 +56,6 @@ int decode_marker(CvMat *mark_mat, marker_rotation_t &rotation)
     // detect the orientation.
     int numberOfCornerMarkers = 0;
     if (cvmGet(mark_mat, 1, 1) < 0.5) {
-        // Position 1,1 represents Y-coordinate (counting from top), X-coordinate (counting from left). The glyph interiors are 4x4 matrices, so (1,1) = top left, (1,4) = top right, etc.
         numberOfCornerMarkers++; // Used below to check that at least one of these conditions (and only one, lest the number be greater than 1) has been met.
         rotation = MARKER_ROT_0_DEG;
     }
@@ -83,8 +90,7 @@ int decode_marker(CvMat *mark_mat, marker_rotation_t &rotation)
     int id = 0;
     switch (rotation) {
     case MARKER_ROT_0_DEG:
-        id = ((cvmGet(mark_mat, 2, 2) < 0.5) << 3) // See above for coordinate explanation. '<<' here is ______. 
-        // Here, if we have a glyph that's been rotated 0 degrees and there is _____________
+        id = ((cvmGet(mark_mat, 2, 2) < 0.5) << 3)
                 | ((cvmGet(mark_mat, 2, 3) < 0.5) << 2)
                 | ((cvmGet(mark_mat, 3, 2) < 0.5) << 1)
                 | ((cvmGet(mark_mat, 3, 3) < 0.5) << 0);
