@@ -24,6 +24,7 @@ Install OpenCV and SCons:
 * **MacPorts:** `sudo port install opencv scons`
 * Linux:
 	* **openSUSE**: `sudo zypper install opencv scons libopencv2_4 opencv-devel`
+* *\[If you successfully build the program on another system, please let me know, and I'll add the required packages here.]*
 
 Compile using SCons:
 
