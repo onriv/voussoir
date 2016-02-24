@@ -94,28 +94,24 @@ int decode_marker(CvMat *mark_mat, marker_rotation_t &rotation)
                 | ((cvmGet(mark_mat, 2, 3) < 0.5) << 2)
                 | ((cvmGet(mark_mat, 3, 2) < 0.5) << 1)
                 | ((cvmGet(mark_mat, 3, 3) < 0.5) << 0);
-                std::cout << "From ROT_0_DEG, detected id is " << id;
         break;
     case MARKER_ROT_90_DEG:
         id = ((cvmGet(mark_mat, 2, 2) < 0.5) << 1)
                 | ((cvmGet(mark_mat, 2, 3) < 0.5) << 3)
                 | ((cvmGet(mark_mat, 3, 2) < 0.5) << 0)
                 | ((cvmGet(mark_mat, 3, 3) < 0.5) << 2);
-                std::cout << "From ROT_90_DEG, detected id is " << id;
         break;
     case MARKER_ROT_180_DEG:
         id = ((cvmGet(mark_mat, 2, 2) < 0.5) << 0)
                 | ((cvmGet(mark_mat, 2, 3) < 0.5) << 1)
                 | ((cvmGet(mark_mat, 3, 2) < 0.5) << 2)
                 | ((cvmGet(mark_mat, 3, 3) < 0.5) << 3);
-                std::cout << "From ROT_180_DEG, detected id is " << id;
         break;
     case MARKER_ROT_270_DEG:
         id = ((cvmGet(mark_mat, 2, 2) < 0.5) << 2)
                 | ((cvmGet(mark_mat, 2, 3) < 0.5) << 0)
                 | ((cvmGet(mark_mat, 3, 2) < 0.5) << 3)
                 | ((cvmGet(mark_mat, 3, 3) < 0.5) << 1);
-                std::cout << "From ROT_270_DEG, detected id is " << id;
         break;
     }
 
@@ -125,13 +121,10 @@ int decode_marker(CvMat *mark_mat, marker_rotation_t &rotation)
         0, 10, 12, 7, 14, 5, 3, 9
     };
     id = id_table[id];
-
-    /*
-    std::cout << "Detected marker ID is ";
-    std::cout << id;
-    std::cout << ".\n";
-    */
-
+    
+    // Uncomment the line below for debugging text.
+    //std::cout << "Detected marker ID is " << id << ".\n";
+    
     return id;
 }
 

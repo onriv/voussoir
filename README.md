@@ -5,6 +5,18 @@ A single-camera solution for book scanning.
 
 This program takes images of books (each picture including a two-page spread), detects special glyphs pasted in the corners of the book, and **[de-keystones](https://en.wikipedia.org/wiki/Keystone_effect "Wikipedia: 'Keystone Effect'") and thereby digitally flattens the pages.** It then **automatically separates the pages into separate, cropped image files.**
 
+# Example
+
+The program takes images like this:
+
+![\[Keystoned image example\]](https://raw.githubusercontent.com/publicus/bookscan/master/build/test_input.jpg "Keystoned image example")
+
+And turns them into images like this:
+
+![\[De-keystoned left page\]](https://raw.githubusercontent.com/publicus/bookscan/master/build/test_output_left_page.jpg "De-keystoned left page")
+
+![\[De-keystoned right page\]](https://raw.githubusercontent.com/publicus/bookscan/master/build/test_output_right_page.jpg "De-keystoned right page")
+
 # Background
 
 This program was written as part of a one-day build in 2012 by [Yutaka Tsutano](http://yutaka.tsutano.com/projects/others/ "Yutaka Tsutano's website"). Videos of Mr. Tsutano's prototype book scanner build and software tests are available here:
