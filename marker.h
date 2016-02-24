@@ -23,6 +23,7 @@
 #include <opencv2/calib3d/calib3d.hpp>
 #include <opencv2/imgproc/imgproc_c.h>
 
+// Create a new type, marker_rotation_t. We'll create a variable of this type and call it "rotation" in the marker.cpp file.
 typedef enum {
     MARKER_ROT_0_DEG,
     MARKER_ROT_270_DEG,
