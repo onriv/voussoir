@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 2.8)
+ 
+INCLUDE_DIRECTORIES(../)
+ADD_EXECUTABLE(main main.cpp marker.cpp page.cpp)
+ 
+FIND_PACKAGE(OpenCV REQUIRED)
+ 
+TARGET_LINK_LIBRARIES(main ${OpenCV_LIBS})
+ 
+FILE(COPY ${PROJECT_SOURCE_DIR}/Example_Images/test_input.jpg    DESTINATION ${PROJECT_BINARY_DIR}/bin)
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)

@@ -44,22 +44,24 @@ Mr. Tsutano noted in the code's original readme that "this program was written i
 
 ## Compilation
 
-Install OpenCV and SCons:
+Install OpenCV and cmake:
 
-* **MacPorts:** `sudo port install opencv scons`
+* **MacPorts:** `sudo port install opencv cmake`
 * **Linux:**
-	* **openSUSE**: `sudo zypper install opencv scons libopencv2_4 opencv-devel`
+	* **openSUSE**: `sudo zypper install opencv cmake libopencv2_4 opencv-devel`
+	* **Ubuntu**: `sudo apt-get install opencv cmake opencv-dev` (This will also install opencv dependencies).
 
 *\[If you successfully build the program on another system, please let me know, and I'll add the required packages here.]*
 
-Compile using SCons:
+Compile using cmake:
 
 ```
 cd [directory of the source code]
-scons
+cmake ./
+make
 ```
 
-The binary executable will be saved under `./build/extpage`.
+The binary executable will be saved under `./bin/main`.
 
 # Usage
 

@@ -11,14 +11,20 @@
 *.la
 *.a
 
-# Ignore SCons related files
+# Ignore SCons-related files
 .sconsign.dblite
+
+# Ignore CMake-related files
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+Makefile
 
 # Ignore OS X related files
 .DS_Store
 
 # Ignore executables
-extpage
+bin
 
 # Ignore Miscellaneous
 scratchpad
