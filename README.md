@@ -9,25 +9,25 @@ This program takes images of books (each picture including a two-page spread), d
 
 The program takes images like this:
 
-<a href="build/test_input.jpg" >
-	<img src="build/test_input.jpg" alt="[Keystoned image example]" height="256px">
+<a href="Example_Images/test_input.jpg" >
+	<img src="Example_Images/test_input.jpg" alt="[Keystoned image example]" height="256px">
 </a>
 
 And turns them into images like these:
 
-<a href="build/test_output_left_page.jpg" style="
+<a href="Example_Images/test_output_left_page.jpg" style="
 	display: inline-block;
 	float: left;
 	padding-right: 1em;
 	">
-	<img src="build/test_output_left_page.jpg" alt="[De-keystoned left page]" height="256px">
+	<img src="Example_Images/test_output_left_page.jpg" alt="[De-keystoned left page]" height="256px">
 </a>
 
-<a href="build/test_output_right_page.jpg" style="
+<a href="Example_Images/test_output_right_page.jpg" style="
 	display: inline-block;
 	float: left;
 	">
-	<img src="build/test_output_right_page.jpg" alt="[De-keystoned right page]" height="256px">
+	<img src="Example_Images/test_output_right_page.jpg" alt="[De-keystoned right page]" height="256px">
 </a>
 
 # Background
