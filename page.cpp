@@ -84,6 +84,9 @@ IplImage *BookImage::create_page_image(
 
     typedef std::map<int, CvPoint2D32f>::const_iterator MMCIT;
     int row = 0;
+    
+    std::cout << "The following markers are recognized: ";
+
     for (MMCIT dit = dst_markers.begin(); dit != dst_markers.end(); ++dit) {
         // Find a source marker with the specified ID.
         MMCIT sit = src_markers.find(dit->first);
