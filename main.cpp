@@ -56,30 +56,35 @@ void process_image(IplImage *src_img,
 
 int main(int argc, char **argv)
 {
+    if (argc > 3) {
+        float page_width = 6.0; //atof(argv[2]); // In the example image, this should be 6
+        float page_height = 9.5; //atof(argv[3]); // In the example image, this should be 9.5
+    }
+    
     // Configure left page. Glyph '0' is expected to be in the top left corner of the page. Glyph '1' is expected to be in the top right corner, etc. going clockwise.
     std::map<int, CvPoint2D32f> left_dst_markers;
-    left_dst_markers[0] = cvPoint2D32f(0.00, 0.00);    
-    left_dst_markers[1] = cvPoint2D32f(6.00, 0.00);
-    left_dst_markers[2] = cvPoint2D32f(6.00, 9.50);
-    left_dst_markers[3] = cvPoint2D32f(0.00, 9.50);
+    left_dst_markers[0] = cvPoint2D32f(0.00, 0.00);
+    left_dst_markers[1] = cvPoint2D32f(page_width, 0.00);
+    left_dst_markers[2] = cvPoint2D32f(page_width, page_height);
+    left_dst_markers[3] = cvPoint2D32f(0.00, page_height);
     LayoutInfo left_layout;
     left_layout.page_left = 0.50;
     left_layout.page_top = 0.25;
-    left_layout.page_right = 6.30;
-    left_layout.page_bottom = 9.20;
+    left_layout.page_right = page_width + 0.30;
+    left_layout.page_bottom = page_height - 0.30;
     left_layout.dpi = 600.0;
 
     // Configure right page. Similar to the left page, Glyph '4' is expected to be in the top left corner of the page, with each higher-numbered glyph in the next corner, going around the page clockwise.
     std::map<int, CvPoint2D32f> right_dst_markers;
     right_dst_markers[4] = cvPoint2D32f(0.00, 0.00);
-    right_dst_markers[5] = cvPoint2D32f(6.00, 0.00);
-    right_dst_markers[6] = cvPoint2D32f(6.00, 9.50);
-    right_dst_markers[7] = cvPoint2D32f(0.00, 9.50);
+    right_dst_markers[5] = cvPoint2D32f(page_width, 0.00);
+    right_dst_markers[6] = cvPoint2D32f(page_width, page_height);
+    right_dst_markers[7] = cvPoint2D32f(0.00, page_height);
     LayoutInfo right_layout;
     right_layout.page_left = -0.30;
     right_layout.page_top = 0.25;
-    right_layout.page_right = 5.50;
-    right_layout.page_bottom = 9.20;
+    right_layout.page_right = page_width - 0.50;
+    right_layout.page_bottom = page_height - 0.30;
     right_layout.dpi = 600.0;
 
     // Process if an input image is supplied; otherwise, open a webcam for
@@ -95,15 +100,16 @@ int main(int argc, char **argv)
 
         IplImage *left_img
                 = book_img.create_page_image(left_dst_markers, left_layout);
+        
         if (left_img != NULL) {
-            cvSaveImage(argv[2], left_img);
+            cvSaveImage(argv[4], left_img);
             cvReleaseImage(&left_img);
         }
 
         IplImage *right_img
                 = book_img.create_page_image(right_dst_markers, right_layout);
         if (right_img != NULL) {
-            cvSaveImage(argv[3], right_img);
+            cvSaveImage(argv[5], right_img);
             cvReleaseImage(&right_img);
         }
 
