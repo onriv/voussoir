@@ -70,25 +70,35 @@ int main(int argc, char **argv)
     left_dst_markers[1] = cvPoint2D32f(page_width, 0.00);
     left_dst_markers[2] = cvPoint2D32f(page_width, page_height);
     left_dst_markers[3] = cvPoint2D32f(0.00, page_height);
-    LayoutInfo left_layout;
-    left_layout.page_left = 0.50;
-    left_layout.page_top = 0.25;
-    left_layout.page_right = page_width + 0.30;
-    left_layout.page_bottom = page_height - 0.30;
-    left_layout.dpi = 600.0;
-
+    
     // Configure right page. Similar to the left page, Glyph '4' is expected to be in the top left corner of the page, with each higher-numbered glyph in the next corner, going around the page clockwise.
     std::map<int, CvPoint2D32f> right_dst_markers;
     right_dst_markers[4] = cvPoint2D32f(0.00, 0.00);
     right_dst_markers[5] = cvPoint2D32f(page_width, 0.00);
     right_dst_markers[6] = cvPoint2D32f(page_width, page_height);
     right_dst_markers[7] = cvPoint2D32f(0.00, page_height);
+    
+    // Define additional information about the pages:
+    LayoutInfo left_layout;
     LayoutInfo right_layout;
-    right_layout.page_left = -0.30;
-    right_layout.page_top = 0.25;
-    right_layout.page_right = page_width - 0.50;
-    right_layout.page_bottom = page_height - 0.30;
+    left_layout.dpi = 600.0;
     right_layout.dpi = 600.0;
+    
+    // The image will automatically be cropped to the outside width of the glyphs, and the inside height of the glyphs (i.e., the longest width between glyphs, and the shortest height between glyphs.
+    // Here, then, you can define offsets (+ or -) if, for example, you want to bring in the image more (if the glyphs are printed on a piece of paper, e.g.).
+    // To define an offset, just add or subtract from the numbers below (e.g., "page_width - 0.30").
+    // These offsets should be on the same scale as the page width and height you pass to the program through the command line (e.g., inches) -- it doesn't matter which scale you use, as long as it's consistent (the important thing is the relative sizes of the numbers given to the program).
+    
+    left_layout.page_left = 0;
+    left_layout.page_top = 0;
+    left_layout.page_right = page_width;
+    left_layout.page_bottom = page_height;
+    
+    right_layout.page_left = 0;
+    right_layout.page_top = 0;
+    right_layout.page_right = page_width;
+    right_layout.page_bottom = page_height;
+    
 
     // Process if an input image is supplied; otherwise, open a webcam for
     // debugging.
