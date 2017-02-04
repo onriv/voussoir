@@ -54,11 +54,14 @@ void process_image(IplImage *src_img,
     }
 }
 
+float page_width;
+float page_height;
+
 int main(int argc, char **argv)
 {
     if (argc > 3) {
-        float page_width = 6.0; //atof(argv[2]); // In the example image, this should be 6
-        float page_height = 9.5; //atof(argv[3]); // In the example image, this should be 9.5
+        page_width = atof(argv[2]); // In the example image, this should be 6
+        page_height = atof(argv[3]); // In the example image, this should be 9.5
     }
     
     // Configure left page. Glyph '0' is expected to be in the top left corner of the page. Glyph '1' is expected to be in the top right corner, etc. going clockwise.
