@@ -60,8 +60,8 @@ float page_height;
 int main(int argc, char **argv)
 {
     if (argc > 3) {
-        page_width = atof(argv[2]); // In the example image, this should be 6
-        page_height = atof(argv[3]); // In the example image, this should be 9.5
+        page_width = atof(argv[2]); // Use the second argument. In the example image, this should be 6
+        page_height = atof(argv[3]); // Use the third argument. In the example image, this should be 9.5
     }
     
     // Configure left page. Glyph '0' is expected to be in the top left corner of the page. Glyph '1' is expected to be in the top right corner, etc. going clockwise.
