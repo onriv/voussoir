@@ -24,6 +24,8 @@
 #include <vector>
 #include <string>
 
+#include <docopt.h> // For parsing command line arguments.
+
 #include "marker.h"
 #include "page.h"
 
@@ -91,13 +93,13 @@ int main(int argc, char **argv)
     
     left_layout.page_left = 0;
     left_layout.page_top = 0;
-    left_layout.page_right = page_width;
-    left_layout.page_bottom = page_height;
+    left_layout.page_right = page_width + 0.4;
+    left_layout.page_bottom = page_height - 0.05;
     
     right_layout.page_left = 0;
     right_layout.page_top = 0;
-    right_layout.page_right = page_width;
-    right_layout.page_bottom = page_height;
+    right_layout.page_right = page_width + 0.4;
+    right_layout.page_bottom = page_height - 0.05;
     
 
     // Process if an input image is supplied; otherwise, open a webcam for
