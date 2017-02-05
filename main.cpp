@@ -14,6 +14,10 @@
  * PERFORMANCE OF THIS SOFTWARE.
  */
 
+/////////////////////////////////////////////
+// Specify dependencies
+/////////////////////////////////////////////
+
 #include <opencv2/objdetect/objdetect.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -28,6 +32,37 @@
 
 #include "marker.h"
 #include "page.h"
+
+/////////////////////////////////////////////
+
+/////////////////////////////////////////////
+// Set up docopt (for automatic command-line argument parsing from help documentation
+/////////////////////////////////////////////
+ 
+static const char USAGE[] =
+R"(Naval Fate.
+
+    Usage:
+      naval_fate ship new <name>...
+      naval_fate ship <name> move <x> <y> [--speed=<kn>]
+      naval_fate ship shoot <x> <y>
+      naval_fate mine (set|remove) <x> <y> [--moored | --drifting]
+      naval_fate (-h | --help)
+      naval_fate --version
+
+    Options:
+      -h --help     Show this screen.
+      --version     Show version.
+      --speed=<kn>  Speed in knots [default: 10].
+      --moored      Moored (anchored) mine.
+      --drifting    Drifting mine.
+)";
+
+/////////////////////////////////////////////
+
+/////////////////////////////////////////////
+// Define the program
+/////////////////////////////////////////////
 
 void process_image(IplImage *src_img,
         std::map<int, CvPoint2D32f> &left_dst_markers,
@@ -61,6 +96,25 @@ float page_height;
 
 int main(int argc, char **argv)
 {
+    //////////////////////////
+    // Parse command-line options with docopt
+    //////////////////////////
+    
+    std::map<std::string, docopt::value> args
+        = docopt::docopt(USAGE,
+                         { argv + 1, argv + argc },
+                         true,               // show help if requested
+                         "Naval Fate 2.0");  // version string
+    /*
+    for(auto const& arg : args) {
+        std::cout << arg.first <<  arg.second << std::endl;
+    }
+    
+    return 0;
+    */
+    
+    //////////////////////////
+    
     if (argc > 3) {
         page_width = atof(argv[2]); // Use the second argument. In the example image, this should be 6
         page_height = atof(argv[3]); // Use the third argument. In the example image, this should be 9.5
@@ -159,3 +213,5 @@ int main(int argc, char **argv)
 
     return 0;
 }
+
+/////////////////////////////////////////////
