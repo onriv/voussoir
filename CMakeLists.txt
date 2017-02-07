@@ -7,10 +7,10 @@ set(DOCOPT_SOURCES ${ROOT}/docopt-0.6.2)
 
 include_directories(${ROOT})
 
-add_library(docopt ${DOCOPT_SOURCES})
-set_target_properties(docopt PROPERTIES LINKER_LANGUAGE CXX) # Tell cmake that this is c++ code. This avoids the following error: 'CMake Error: Cannot determine link language for target "docopt". CMake Error: CMake can not determine linker language for target: docopt'
+#add_library(docopt ${DOCOPT_SOURCES})
+#set_target_properties(docopt PROPERTIES LINKER_LANGUAGE CXX) # Tell cmake that this is c++ code. This avoids the following error: 'CMake Error: Cannot determine link language for target "docopt". CMake Error: CMake can not determine linker language for target: docopt'
 
-include_directories(${DOCOPT_SOURCES})
+#include_directories(${DOCOPT_SOURCES})
 #add_subdirectory(${DOCOPT_SOURCES})
 
 #add_library(docopt STATIC IMPORTED)
@@ -24,9 +24,9 @@ ADD_EXECUTABLE(bookscan main.cpp marker.cpp page.cpp)
 FIND_PACKAGE(OpenCV REQUIRED)
 
 TARGET_LINK_LIBRARIES(bookscan ${OpenCV_LIBS})
-find_library(docopt ${ROOT}/docopt-0.6.2/lib64/libdocopt.so)
+#find_library(docopt ${ROOT}/docopt-0.6.2/lib64/libdocopt.so)
 #TARGET_LINK_LIBRARIES(bookscan ${ROOT}/docopt-0.6.2/lib64/libdocopt.so)
-TARGET_LINK_LIBRARIES(bookscan docopt)
+#TARGET_LINK_LIBRARIES(bookscan docopt)
 
 set(CMAKE_CXX_FLAGS "-std=c++11") # docopt needs this, per https://github.com/Qihoo360/logkafka/issues/1
 
