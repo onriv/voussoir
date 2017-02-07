@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-PROJECT(Bookscan)
+PROJECT(bookscan)
 
 set(ROOT ./)
 set(DOCOPT_SOURCES ${ROOT}/docopt-0.6.2)
@@ -16,7 +16,7 @@ include_directories(${DOCOPT_SOURCES})
 #add_library(docopt STATIC IMPORTED)
 #set_target_properties(docopt PROPERTIES IMPORTED_LOCATION ${ROOT}/docopt-0.6.2)
 #link_directories(${ROOT}/docopt-0.6.2)
-#TARGET_LINK_LIBRARIES(bookscan ${ROOT}/docopt-0.6.2)
+#TARGET_LINK_LIBRARIES(bookscan ${ROOT}/docopt-0.6.2/lib64)
 
 
 ADD_EXECUTABLE(bookscan main.cpp marker.cpp page.cpp)
@@ -24,6 +24,9 @@ ADD_EXECUTABLE(bookscan main.cpp marker.cpp page.cpp)
 FIND_PACKAGE(OpenCV REQUIRED)
 
 TARGET_LINK_LIBRARIES(bookscan ${OpenCV_LIBS})
+find_library(docopt ${ROOT}/docopt-0.6.2/lib64/libdocopt.so)
+#TARGET_LINK_LIBRARIES(bookscan ${ROOT}/docopt-0.6.2/lib64/libdocopt.so)
+TARGET_LINK_LIBRARIES(bookscan docopt)
 
 set(CMAKE_CXX_FLAGS "-std=c++11") # docopt needs this, per https://github.com/Qihoo360/logkafka/issues/1
 
