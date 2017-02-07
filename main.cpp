@@ -117,17 +117,18 @@ int main(int argc, const char** argv)
 	//tester = docopt::value(args.find("--page-height")->second);
 	//std::cout << docopt::value(args.find("--page-height")->second) << std::endl;
 	
-	//if(page_height < 10){
+	if(args["--verbose"].asBool()){
 		for(auto const& arg : args) {
 		    std::cout << arg.first <<  arg.second << std::endl;
 		}
-	//}
+	}
 	
     // See, e.g., http://www.cplusplus.com/reference/map/map/find/ for info. re: getting values out of maps for named components.
-    std::cout << "PAGE HEIGHT IS " << args.find("--page-height")->second << std::endl;
+    std::cout << "PAGE HEIGHT IS " << args["--page-height"].asLong() << std::endl; // See https://github.com/docopt/docopt.cpp/issues/8 for an offhand example.
+	std::cout << "PAGE HEIGHT 2 IS " << args["--page-height"] << std::endl;
 	
-	long tester;
-	tester = long(args.find("--page-height")->second);
+	//long tester;
+	//tester = long(args.find("--page-height")->second);
 	
 	
 	std::cout << "PAGE HEIGHT VALUE IS " << docopt::value(args.find("--page-height")->second) << std::endl;
