@@ -43,7 +43,8 @@ static const char USAGE[] =
 R"(Bookscan.
 
     Usage:
-      bookscan [-w <page_width_argument>] [-t <page_height_argument>] (-i input_image) (-o <output_image_one> [<output_image_two>])
+      bookscan [-w page_width_argument] [-t page_height_argument]
+      bookscan (-i input_image) (-o <output_image_one> [<output_image_two>])
       bookscan ship <name> move <x> <y> [--speed=<kn>]
       bookscan ship shoot <x> <y>
       bookscan mine (set|remove) <x> <y> [--moored | --drifting]
@@ -114,6 +115,9 @@ int main(int argc, char **argv)
     for(auto const& arg : args) {
         std::cout << arg.first <<  arg.second << std::endl;
     }
+    
+    // See, e.g., http://www.cplusplus.com/reference/map/map/find/ for info. re: getting values out of maps for named components.
+    std::cout << "PAGE HEIGHT IS " << args.find("--page-height")->second;
     
     return 0;
     
