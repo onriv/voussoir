@@ -30,6 +30,8 @@
 
 #include <docopt-0.6.2/docopt.h> // For parsing command line arguments.
 
+#include <typeinfo>
+
 #include "marker.h"
 #include "page.h"
 
@@ -43,16 +45,15 @@ static const char USAGE[] =
 R"(Bookscan.
 
     Usage:
-      bookscan [-w page_width_argument] [-t page_height_argument] -i input_image -o <output_image_one> [<output_image_two>]
-      bookscan ship <name> move <x> <y> [--speed=<kn>]
-      bookscan ship shoot <x> <y>
-      bookscan mine (set|remove) <x> <y> [--moored | --drifting]
+      bookscan [--verbose] [-w page_width_argument] [-t page_height_argument] -i input_image -o <output_image_one> [<output_image_two>]
       bookscan (-h | --help)
       bookscan (-v | --version)
 
     Options:
       -h --help     Show this screen.
       -v --version  Show version.
+	  
+	  --verbose     Show additional output, including the values of every option the program accepts.
       
       -t --page-height=<page_width_argument>  Height of each page (in any metric) ('t' is for 'tall') [default: 10].
       -w --page-width=<page_height_argument>  Width of each page (in any metric) [default: 6].
@@ -99,7 +100,7 @@ void process_image(IplImage *src_img,
 float page_width;
 float page_height;
 
-int main(int argc, char **argv)
+int main(int argc, const char** argv)
 {
     //////////////////////////
     // Parse command-line options with docopt
@@ -111,13 +112,32 @@ int main(int argc, char **argv)
              true, // show help if requested
              "Bookscan 0.1" // version string
           );
-    
-    for(auto const& arg : args) {
-        std::cout << arg.first <<  arg.second << std::endl;
-    }
-    
+	
+	//int tester;
+	//tester = docopt::value(args.find("--page-height")->second);
+	//std::cout << docopt::value(args.find("--page-height")->second) << std::endl;
+	
+	//if(page_height < 10){
+		for(auto const& arg : args) {
+		    std::cout << arg.first <<  arg.second << std::endl;
+		}
+	//}
+	
     // See, e.g., http://www.cplusplus.com/reference/map/map/find/ for info. re: getting values out of maps for named components.
-    std::cout << "PAGE HEIGHT IS " << args.find("--page-height")->second;
+    std::cout << "PAGE HEIGHT IS " << args.find("--page-height")->second << std::endl;
+	
+	long tester;
+	tester = long(args.find("--page-height")->second);
+	
+	
+	std::cout << "PAGE HEIGHT VALUE IS " << docopt::value(args.find("--page-height")->second) << std::endl;
+
+	//auto tester = args.find("--page-height")->second;
+	//bool y;
+	//y = bool (tester);    // functional notation
+	//if (tester){
+		//std::cout << typeid(tester).name() << std::endl;
+	//}
     
     return 0;
     
