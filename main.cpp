@@ -43,8 +43,7 @@ static const char USAGE[] =
 R"(Bookscan.
 
     Usage:
-      bookscan [-w page_width_argument] [-t page_height_argument]
-      bookscan (-i input_image) (-o <output_image_one> [<output_image_two>])
+      bookscan [-w page_width_argument] [-t page_height_argument] -i input_image -o <output_image_one> [<output_image_two>]
       bookscan ship <name> move <x> <y> [--speed=<kn>]
       bookscan ship shoot <x> <y>
       bookscan mine (set|remove) <x> <y> [--moored | --drifting]
@@ -54,13 +53,14 @@ R"(Bookscan.
     Options:
       -h --help     Show this screen.
       -v --version  Show version.
+      
       -t --page-height=<page_width_argument>  Height of each page (in any metric) ('t' is for 'tall') [default: 10].
       -w --page-width=<page_height_argument>  Width of each page (in any metric) [default: 6].
-      --no-right-page Only process left-side pages (Markers 0-3).
-      --no-left-page Only process right-side pages (Markers 4-7).
-
-      --moored      Moored (anchored) mine.
-      --drifting    Drifting mine.
+      --no-left-page Only process right-side pages (Markers 0-3).
+      --no-right-page Only process left-side pages (Markers 4-7).
+      
+      -i --input-image The input image.
+      -o --output The output image(s).
 )";
 
 /////////////////////////////////////////////
