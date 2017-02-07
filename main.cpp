@@ -99,7 +99,7 @@ int main(int argc, char **argv)
     //////////////////////////
     // Parse command-line options with docopt
     //////////////////////////
-    /*
+    ///*
     std::map<std::string, docopt::value> args
         = docopt::docopt(USAGE,
                          { argv + 1, argv + argc },

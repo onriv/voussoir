@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 PROJECT(bookscan)
 
 set(ROOT ./)
-set(DOCOPT_SOURCES ${ROOT}/docopt-0.6.2)
+#set(DOCOPT_SOURCES ${ROOT}/docopt-0.6.2)
 
 include_directories(${ROOT})
 
@@ -27,6 +27,8 @@ TARGET_LINK_LIBRARIES(bookscan ${OpenCV_LIBS})
 #find_library(docopt ${ROOT}/docopt-0.6.2/lib64/libdocopt.so)
 #TARGET_LINK_LIBRARIES(bookscan ${ROOT}/docopt-0.6.2/lib64/libdocopt.so)
 #TARGET_LINK_LIBRARIES(bookscan docopt)
+
+target_compile_definitions(bookscan PRIVATE DOCOPT_HEADER_ONLY=1)
 
 set(CMAKE_CXX_FLAGS "-std=c++11") # docopt needs this, per https://github.com/Qihoo360/logkafka/issues/1
 
