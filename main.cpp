@@ -101,6 +101,15 @@ void process_image(IplImage *src_img,
 
 float page_width;
 float page_height;
+bool verbose;
+bool is_input_image_given;
+const char* input_image;
+bool is_first_output_image_given;
+std::string first_output_image;
+bool is_second_output_image_given;
+std::string second_output_image;
+bool process_left_page;
+bool process_right_page;
 
 int main(int argc, const char** argv)
 {
@@ -124,42 +133,44 @@ int main(int argc, const char** argv)
     	// std::string example = args["--example_argument"].asString(); // String
     	// float example = stof(args["--example_argument"].asString()); // Float
     	// bool example = args["--example_argument"].asBool(); // Boolean
-    
-    
-    bool verbose = args["--verbose"].asBool();
+
+	verbose = args["--verbose"].asBool();
     
     page_height = stof(args["--page-height"].asString());
     page_width = stof(args["--page-width"].asString());
     
-    bool is_input_image_given;
+    
     if(args["<output_image_one>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
     	//std::cout << "YES" << std::endl;
     	is_input_image_given = true;
+    	input_image = args["<input_image>"].asString().c_str();
+    	//const char* tester_two = tester.c_str();
+    	//input_image
     } else {
     	//std::cout << "NO" << std::endl;
     	is_input_image_given = false;
     }
     
-    bool is_first_output_image_given;
     if(args["<output_image_one>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
     	//std::cout << "YES" << std::endl;
     	is_first_output_image_given = true;
+    	first_output_image = args["<output_image_one>"].asString();
     } else {
     	//std::cout << "NO" << std::endl;
     	is_first_output_image_given = false;
     }
     
-    bool is_second_output_image_given;
-    if(args["<output_image_one>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
+    if(args["<output_image_two>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
     	//std::cout << "YES" << std::endl;
     	is_second_output_image_given = true;
+    	second_output_image = args["<output_image_two>"].asString();
     } else {
     	//std::cout << "NO" << std::endl;
     	is_second_output_image_given = false;
     }
     
-    bool process_left_page = ! args["--no-left-page"].asBool(); // Make this a positive question ("Do we process the left page?") by flipping it with '~' from the assertion "Do not process the left page."
-    bool process_right_page = ! args["--no-right-page"].asBool(); // Make this a positive question ("Do we process the left page?") by flipping it with '~' from the assertion "Do not process the left page."
+    process_left_page = ! args["--no-left-page"].asBool(); // Make this a positive question ("Do we process the left page?") by flipping it with '~' from the assertion "Do not process the left page."
+    process_right_page = ! args["--no-right-page"].asBool(); // Make this a positive question ("Do we process the left page?") by flipping it with '~' from the assertion "Do not process the left page."
 
     if(verbose == true){ // If we've been asked to be verbose, print info. about each option that the program accepts (in the form "Name: 'Value'"):
         std::cout << "Verbose mode is turned on." << std::endl;
@@ -175,33 +186,10 @@ int main(int argc, const char** argv)
     // End Extract argument values
     /////////////
     
-    
-    // See, e.g., http://www.cplusplus.com/reference/map/map/find/ for info. re: getting values out of maps for named components.
-    //std::cout << "PAGE HEIGHT IS " << args["--page-height"].asLong() << std::endl;
-    //std::cout << "PAGE HEIGHT 2 IS " << args["--page-height"] << std::endl;
-    
-    //long tester;
-    //tester = long(args.find("--page-height")->second);
-    
-    
-    //std::cout << "PAGE HEIGHT VALUE IS " << docopt::value(args.find("--page-height")->second) << std::endl;
-
-    //auto tester = args.find("--page-height")->second;
-    //bool y;
-    //y = bool (tester);    // functional notation
-    //if (tester){
-        //std::cout << typeid(tester).name() << std::endl;
-    //}
-    
-    return 0;
+    //return 0;
     
     //////////////////////////
-    
-    if (argc > 3) {
-        page_width = atof(argv[2]); // Use the second argument. In the example image, this should be 6
-        page_height = atof(argv[3]); // Use the third argument. In the example image, this should be 9.5
-    }
-    
+        
     // Configure left page. Glyph '0' is expected to be in the top left corner of the page. Glyph '1' is expected to be in the top right corner, etc. going clockwise.
     std::map<int, CvPoint2D32f> left_dst_markers;
     left_dst_markers[0] = cvPoint2D32f(0.00, 0.00);
@@ -241,7 +229,13 @@ int main(int argc, const char** argv)
     // Process if an input image is supplied; otherwise, open a webcam for
     // debugging.
     if (argc > 3) {
-        IplImage *src_img = cvLoadImage(argv[1]);
+        //IplImage *src_img = cvLoadImage(argv[1]);
+        //const char* tester_three = "tester";
+        IplImage *src_img = cvLoadImage(input_image);
+        
+        return 0; // Added by JL for debugging
+        
+        
         if (src_img == NULL) {
             std::cerr << "Failed to load the source image specified.\n";
             return 1;
