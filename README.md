@@ -55,7 +55,7 @@ Mr. Tsutano noted in the code's original readme that "this program was written i
 
 This program uses [docopt](https://github.com/docopt/docopt.cpp "Docopt.cpp GitHub page"). Docopt does not need to be installed separately, but it *does* depend on `gcc` 4.9 or greater.
 
-If you are getting an error when compiling that includes `undefined reference to \`std::regex_token_iterator\``, run `gcc --version` and confirm that it is greater than or equal to 4.9. If not, you need to upgrade gcc. Note that `g++ --version`, `c++ --version`, and `cpp --version` should similarly show 4.9 or greater.
+If you are getting an error when compiling that includes "undefined reference to `std::regex_token_iterator`", run `gcc --version` and confirm that it is greater than or equal to 4.9. If not, you need to upgrade gcc. Note that `g++ --version`, `c++ --version`, and `cpp --version` should similarly show 4.9 or greater.
 
 If you've upgraded and are still seeing the error, it's likely that your system is still trying to use the lower versions. In this case, one way to explicitly tell cmake which version to use (for example, version 5) is to replace the command `cmake ./` below with `cmake -DCMAKE_CXX_COMPILER=g++-5 .`.
 
