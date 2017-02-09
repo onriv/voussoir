@@ -21,5 +21,8 @@ set(CMAKE_CXX_FLAGS "-std=c++11") # docopt needs this, per https://github.com/Qi
 
 ##############
 
-FILE(COPY ${PROJECT_SOURCE_DIR}/Example_Images/test_input.jpg    DESTINATION ${PROJECT_BINARY_DIR}/bin)
+FILE(COPY ${PROJECT_SOURCE_DIR}/Example_Images/test_input.jpg    DESTINATION ${PROJECT_BINARY_DIR}/bin/docs)
+FILE(COPY ${PROJECT_SOURCE_DIR}/markers/markers_for_book_scanner.ai    DESTINATION ${PROJECT_BINARY_DIR}/bin/docs)
+FILE(COPY ${PROJECT_SOURCE_DIR}/markers/markers_for_book_scanner.pdf    DESTINATION ${PROJECT_BINARY_DIR}/bin/docs)
+
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)

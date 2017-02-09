@@ -43,11 +43,19 @@
  
 static const char USAGE[] =
 R"(Bookscan.
-
+    Description:
+	  This program takes images of books (each picture including a two-page spread), detects special glyphs pasted in the corners of the book, and de-keystones and thereby digitally flattens the pages. It then automatically separates the pages into separate, cropped image files.
+	
     Usage:
-      bookscan [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
+      bookscan
+      
       bookscan (-h | --help)
+      
       bookscan (-v | --version)
+      
+      bookscan [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
+      
+      bookscan [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [--offset-left-page-left-side <offset_left_page_left_side>] [--offset-left-page-right-side <offset_left_page_right_side>] [--offset-left-page-top-side <offset_left_page_top_side>] [--offset-left-page-bottom-side <offset_left_page_bottom_side>] [--offset-right-page-left-side <offset_right_page_left_side>] [--offset-right-page-right-side <offset_right_page_right_side>] [--offset-right-page-top-side <offset_right_page_top_side>] [--offset-right-page-bottom-side <offset_right_page_bottom_side>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
 
     Options:
       -h --help     Show this screen.
@@ -64,6 +72,22 @@ R"(Bookscan.
       
       <output_image_one>  The output image. Needs to have an image-like file extension (e.g., ".jpg", ".JPG", ".png", ".tif", ".tiff").
       <output_image_two>  If relevant, the second output image (see <output_image_one> above).
+      
+      --offset-left-page-left-side=<offset_left_page_left_side>  Page offset, in the same units as page height and width. [default: 0.0]
+	  --offset-left-page-right-side=<offset_left_page_right_side>  Page offset, in the same units as page height and width. [default: 0.0]
+	  --offset-left-page-top-side=<offset_left_page_top_side>  Page offset, in the same units as page height and width. [default: 0.0]
+	  --offset-left-page-bottom-side=<offset_left_page_bottom_side>  Page offset, in the same units as page height and width. [default: 0.0]
+	  
+	  --offset-right-page-left-side=<offset_right_page_left_side>  Page offset, in the same units as page height and width. [default: 0.0]
+	  --offset-right-page-right-side=<offset_right_page_right_side>  Page offset, in the same units as page height and width. [default: 0.0]
+	  --offset-right-page-top-side=<offset_right_page_top_side>  Page offset, in the same units as page height and width. [default: 0.0]
+	  --offset-right-page-bottom-side=<offset_right_page_bottom_side> Page offset, in the same units as page height and width. [default: 0.0]
+      
+    Debugging mode:
+      Running the program without any arguments will open a webcam window for real-time glyph detection (for calibration). If a webcam is found, this will cause a window to open, showing output from the webcam. When the four "left page" glyphs (i.e., glyphs 0, 1, 2, and 3) are detected by the webcam, a new window will open showing the de-keystoned image that the four glyphs surround. Similarly, when the four "right page" glyphs (i.e., glyphs 4, 5, 6, and 7) are detected by the webcam, an additional new window will open, showing the de-keystoned image for those four glyphs. Throughout this process, debugging text will be given in the terminal window, including which glyphs are detected.
+      
+    Placing markers:
+      Within the docs directory, you'll find PDF and Adobe Illustrator / Inkscape versions of a series of 15 "glyphs," small images that each comprises a unique pattern of pixels in a 6x6 grid. You'll need to print and cut out the glyphs; at the moment, only glyphs 0-3 (left page) and 4-7 (right page) are needed. Tape or otherwise affix the glyphs in clockwise order around the perimeter of each book page (for example, if you're using a glass or acrylic platen to flatten the pages of a book, affix the glyphs in each corner of the platen: starting at the top left and moving clockwise to the center/spine of the book, place glyphs 0, 1, 2, and 3 around the left page, and (again from top left and moving clockwise) glyphs 4, 5, 6, and 7 on the right page. The program will, by default, crop to the inside vertical, outside horizontal edge of the glyphs it detects. This can be changed using the offset arguments defined above.
 )";
 
 /////////////////////////////////////////////
