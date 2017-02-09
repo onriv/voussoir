@@ -61,7 +61,7 @@ If you've upgraded and are still seeing the error, it's likely that your system 
 
 *\[If you successfully build the program on another system, please let me know, and I'll add the required packages here.]*
 
-### Compile using `cmake` (See above for information regarding telling `cmake` explcitly which version of c++ to use):
+### Compile using `cmake` (See above for information regarding telling `cmake` explicitly which version of c++ to use):
 
 ```
 cd [directory of the source code]
