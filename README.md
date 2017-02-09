@@ -44,16 +44,24 @@ Mr. Tsutano noted in the code's original readme that "this program was written i
 
 ## Compilation
 
-Install OpenCV and cmake:
+### Install OpenCV and `cmake`:
 
 * **MacPorts:** `sudo port install opencv cmake`
 * **Linux:**
 	* **openSUSE**: `sudo zypper install opencv cmake libopencv2_4 opencv-devel`
 	* **Ubuntu**: `sudo apt-get install opencv cmake opencv-dev` (This will also install opencv dependencies).
 
+### Confirm that you have installed (and are using) `gcc` 4.9+
+
+This program uses [docopt](https://github.com/docopt/docopt.cpp "Docopt.cpp GitHub page"). Docopt does not need to be installed separately, but it *does* depend on `gcc` 4.9 or greater.
+
+If you are getting an error when compiling that includes `undefined reference to \`std::regex_token_iterator\``, run `gcc --version` and confirm that it is greater than or equal to 4.9. If not, you need to upgrade gcc. Note that `g++ --version`, `c++ --version`, and `cpp --version` should similarly show 4.9 or greater.
+
+If you've upgraded and are still seeing the error, it's likely that your system is still trying to use the lower versions. In this case, one way to explicitly tell cmake which version to use (for example, version 5) is to replace the command `cmake ./` below with `cmake -DCMAKE_CXX_COMPILER=g++-5 .`.
+
 *\[If you successfully build the program on another system, please let me know, and I'll add the required packages here.]*
 
-Compile using cmake:
+### Compile using `cmake` (See above for information regarding telling `cmake` explcitly which version of c++ to use):
 
 ```
 cd [directory of the source code]
@@ -61,7 +69,7 @@ cmake ./
 make
 ```
 
-The binary executable will be saved under `./bin/main`.
+The binary executable will be saved under `./bin/bookscan`.
 
 # Usage
 
@@ -79,7 +87,7 @@ Do note that the program only transforms the pages as two-dimensional objects; t
 
 The program takes three arguments:
 
-`./extpage test_input.jpg output_left.jpg output_right.jpg`
+`./bookscan test_input.jpg output_left.jpg output_right.jpg`
 
 where test_input.jpg is the input file name, and the following two are the
 output file names.
@@ -88,7 +96,9 @@ output file names.
 
 To debug using a webcam, execute the program without an argument:
 
-	./extpage
+```
+./bookscan
+```
 
 If a webcam is found, this will cause a window to open, showing output from the webcam. When the four "left page" glyphs (i.e., glyphs 0, 1, 2, and 3) are detected by the webcam, a new window will open showing the de-keystoned image that the four glyphs surround. Similarly, when the four "right page" glyphs (i.e., glyphs 4, 5, 6, and 7) are detected by the webcam, an additional new window will open, showing the de-keystoned image for those four glyphs. Throughout this process, debugging text will be given in the terminal window, including which glyphs are detected.
 
