@@ -45,7 +45,7 @@ static const char USAGE[] =
 R"(Bookscan.
 
     Usage:
-      bookscan [--verbose] [-w page_width_argument] [-t page_height_argument] -i input_image -o <output_image_one> [<output_image_two>] [-x example]
+      bookscan [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
       bookscan (-h | --help)
       bookscan (-v | --version)
 
@@ -55,14 +55,15 @@ R"(Bookscan.
       
       --verbose     Show additional output, including the values of every option the program accepts.
       
-      -t --page-height=<page_width_argument>  Height of each page (in any metric) ('t' is for 'tall') [default: 10.0].
-      -w --page-width=<page_height_argument>  Width of each page (in any metric) [default: 6.0].
-      -x Example [default: 1.5]
-      --no-left-page Only process right-side pages (Markers 0-3).
-      --no-right-page Only process left-side pages (Markers 4-7).
+      -t --page-height=<page_height_argument>  Height of each page (in any metric) ('t' is for 'tall'). [default: 10.0]
+      -w --page-width=<page_width_argument>  Width of each page (in any metric). [default: 6.0]
+      --no\-left\-page  Only process right-side pages (Markers 0-3).
+      --no\-right\-page  Only process left-side pages (Markers 4-7).
       
-      -i --input-image The input image.
-      -o --output The output image(s).
+      -i --input-image=<input_image>  The input image.
+      
+      <output_image_one>  The output image.
+      <output_image_two>  If relevant, the second output image.
 )";
 
 /////////////////////////////////////////////
@@ -119,38 +120,48 @@ int main(int argc, const char** argv)
     // Extract argument values
     /////////////
     
+    // Examples for argument parsing:
+    	// std::string example = args["--example_argument"].asString(); // String
+    	// float example = stof(args["--example_argument"].asString()); // Float
+    	// bool example = args["--example_argument"].asBool(); // Boolean
+    
+    
     bool verbose = args["--verbose"].asBool();
     
-    //page_height = args["--page-height"].asLong();
+    page_height = stof(args["--page-height"].asString());
+    page_width = stof(args["--page-width"].asString());
     
-    //double const& example_thing = 2.5; // Works
-    //double const& example_thing = atof("2.5"); // Works
-    //double const& example_thing = atof(docopt::value(args.find("-x")->second)); // Does not work
-    //double const& example_thing = docopt::value(args.find("-x")->second); // Does not work
+    bool is_input_image_given;
+    if(args["<output_image_one>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
+    	//std::cout << "YES" << std::endl;
+    	is_input_image_given = true;
+    } else {
+    	//std::cout << "NO" << std::endl;
+    	is_input_image_given = false;
+    }
     
-    std::string example_thing = args["-x"].asString(); // Works
-    float example_thing_two = stof(example_thing); // Works with the above
+    bool is_first_output_image_given;
+    if(args["<output_image_one>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
+    	//std::cout << "YES" << std::endl;
+    	is_first_output_image_given = true;
+    } else {
+    	//std::cout << "NO" << std::endl;
+    	is_first_output_image_given = false;
+    }
     
+    bool is_second_output_image_given;
+    if(args["<output_image_one>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
+    	//std::cout << "YES" << std::endl;
+    	is_second_output_image_given = true;
+    } else {
+    	//std::cout << "NO" << std::endl;
+    	is_second_output_image_given = false;
+    }
     
-    std::cout << "Example thing variable: " << example_thing << std::endl;
-    std::cout << "Example thing two variable minus 2: " << example_thing_two - 2 << std::endl;
-    std::cout << "Example thing argument: " << docopt::value(args.find("-x")->second) << std::endl;
-    
-      /*
-      -t --page-height=<page_width_argument>  Height of each page (in any metric) ('t' is for 'tall') [default: 10].
-      -w --page-width=<page_height_argument>  Width of each page (in any metric) [default: 6].
-      --no-left-page Only process right-side pages (Markers 0-3).
-      --no-right-page Only process left-side pages (Markers 4-7).
-      
-      -i --input-image The input image.
-      -o --output The output image(s).
-    */
-    
-    //int tester;
-    //tester = docopt::value(args.find("--page-height")->second);
-    //std::cout << docopt::value(args.find("--page-height")->second) << std::endl;
-    
-    if(verbose == 1){ // If we've been asked to be verbose, print info. about each option that the program accepts (in the form "Name: 'Value'"):
+    bool process_left_page = ! args["--no-left-page"].asBool(); // Make this a positive question ("Do we process the left page?") by flipping it with '~' from the assertion "Do not process the left page."
+    bool process_right_page = ! args["--no-right-page"].asBool(); // Make this a positive question ("Do we process the left page?") by flipping it with '~' from the assertion "Do not process the left page."
+
+    if(verbose == true){ // If we've been asked to be verbose, print info. about each option that the program accepts (in the form "Name: 'Value'"):
         std::cout << "Verbose mode is turned on." << std::endl;
         
         std::cout << "Program options and their current settings:" << std::endl;
