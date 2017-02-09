@@ -140,10 +140,10 @@ int main(int argc, const char** argv)
     page_width = stof(args["--page-width"].asString());
     
     
-    if(args["<output_image_one>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
+    if(args["--input-image"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
     	//std::cout << "YES" << std::endl;
     	is_input_image_given = true;
-    	input_image = args["<input_image>"].asString().c_str();
+    	input_image = args["--input_image"].asString().c_str();
     } else {
     	//std::cout << "NO" << std::endl;
     	is_input_image_given = false;
@@ -223,10 +223,10 @@ int main(int argc, const char** argv)
     right_layout.page_right = page_width + 0.4;
     right_layout.page_bottom = page_height - 0.05;
     
-
     // Process if an input image is supplied; otherwise, open a webcam for
     // debugging.
-    if (is_input_image_given) {
+    if (is_input_image_given == true) {
+	    
         IplImage *src_img = cvLoadImage(input_image);
         
         if (src_img == NULL) {
@@ -240,15 +240,15 @@ int main(int argc, const char** argv)
                 = book_img.create_page_image(left_dst_markers, left_layout);
         
         if (left_img != NULL) {
-            cvSaveImage(first_output_image, left_img);
-            cvReleaseImage(&left_img);
+            //cvSaveImage(first_output_image, left_img);
+            //cvReleaseImage(&left_img);
         }
 
         IplImage *right_img
                 = book_img.create_page_image(right_dst_markers, right_layout);
         if (right_img != NULL) {
-            cvSaveImage(second_output_image, right_img);
-            cvReleaseImage(&right_img);
+            //cvSaveImage(second_output_image, right_img);
+            //cvReleaseImage(&right_img);
         }
 
         cvReleaseImage(&src_img);
