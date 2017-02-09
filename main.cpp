@@ -57,13 +57,13 @@ R"(Bookscan.
       
       -t --page-height=<page_height_argument>  Height of each page (in any metric) ('t' is for 'tall'). [default: 10.0]
       -w --page-width=<page_width_argument>  Width of each page (in any metric). [default: 6.0]
-      --no\-left\-page  Only process right-side pages (Markers 0-3).
-      --no\-right\-page  Only process left-side pages (Markers 4-7).
+      --no-left-page  Only process right-side pages (Markers 0-3).
+      --no-right-page  Only process left-side pages (Markers 4-7).
       
       -i --input-image=<input_image>  The input image.
       
-      <output_image_one>  The output image.
-      <output_image_two>  If relevant, the second output image.
+      <output_image_one>  The output image. Needs to have an image-like file extension (e.g., ".jpg", ".JPG", ".png", ".tif", ".tiff").
+      <output_image_two>  If relevant, the second output image (see <output_image_one> above).
 )";
 
 /////////////////////////////////////////////
@@ -136,16 +136,27 @@ int main(int argc, const char** argv)
 
 	verbose = args["--verbose"].asBool();
     
+    if(verbose == true){ // If we've been asked to be verbose, print info. about each option that the program accepts (in the form "Name: 'Value'"):
+        std::cout << "Verbose mode is turned on." << std::endl;
+        
+        std::cout << "Program options and their current settings:" << std::endl;
+        
+        for(auto const& arg : args) {
+            std::cout << "    " << arg.first << ": " << arg.second << std::endl; // We'll indent the lines with several leading spaces, just for aesthetics.
+        }
+    }
+    
+    
     page_height = stof(args["--page-height"].asString());
     page_width = stof(args["--page-width"].asString());
     
     
     if(args["--input-image"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
-    	//std::cout << "YES" << std::endl;
+    	std::cout << "YES" << std::endl;
     	is_input_image_given = true;
-    	input_image = args["--input_image"].asString().c_str();
+    	input_image = args["--input-image"].asString().c_str();
     } else {
-    	//std::cout << "NO" << std::endl;
+    	std::cout << "NO" << std::endl;
     	is_input_image_given = false;
     }
     
@@ -169,25 +180,13 @@ int main(int argc, const char** argv)
     
     process_left_page = ! args["--no-left-page"].asBool(); // Make this a positive question ("Do we process the left page?") by flipping it with '~' from the assertion "Do not process the left page."
     process_right_page = ! args["--no-right-page"].asBool(); // Make this a positive question ("Do we process the left page?") by flipping it with '~' from the assertion "Do not process the left page."
-
-    if(verbose == true){ // If we've been asked to be verbose, print info. about each option that the program accepts (in the form "Name: 'Value'"):
-        std::cout << "Verbose mode is turned on." << std::endl;
-        
-        std::cout << "Program options and their current settings:" << std::endl;
-        
-        for(auto const& arg : args) {
-            std::cout << "    " << arg.first << ": " << arg.second << std::endl; // We'll indent the lines with several leading spaces, just for aesthetics.
-        }
-    }
     
     /////////////
     // End Extract argument values
     /////////////
     
-    //return 0;
-    
     //////////////////////////
-        
+    
     // Configure left page. Glyph '0' is expected to be in the top left corner of the page. Glyph '1' is expected to be in the top right corner, etc. going clockwise.
     std::map<int, CvPoint2D32f> left_dst_markers;
     left_dst_markers[0] = cvPoint2D32f(0.00, 0.00);
@@ -226,31 +225,31 @@ int main(int argc, const char** argv)
     // Process if an input image is supplied; otherwise, open a webcam for
     // debugging.
     if (is_input_image_given == true) {
-	    
-        IplImage *src_img = cvLoadImage(input_image);
+		
+	    IplImage *src_img = cvLoadImage(input_image);
         
         if (src_img == NULL) {
-            std::cerr << "Failed to load the source image specified.\n";
+            std::cerr << "Error: Failed to load the source image specified.\n";
             return 1;
         }
-
+		
         BookImage book_img(src_img);
-
+		
         IplImage *left_img
                 = book_img.create_page_image(left_dst_markers, left_layout);
         
         if (left_img != NULL) {
-            //cvSaveImage(first_output_image, left_img);
-            //cvReleaseImage(&left_img);
+            cvSaveImage(first_output_image, left_img);
+            cvReleaseImage(&left_img);
         }
-
+		
         IplImage *right_img
                 = book_img.create_page_image(right_dst_markers, right_layout);
         if (right_img != NULL) {
-            //cvSaveImage(second_output_image, right_img);
-            //cvReleaseImage(&right_img);
+            cvSaveImage(second_output_image, right_img);
+            cvReleaseImage(&right_img);
         }
-
+		return 0;
         cvReleaseImage(&src_img);
     } else { // Open debugging windows
         // Create windows.
