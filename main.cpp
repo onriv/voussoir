@@ -105,9 +105,9 @@ bool verbose;
 bool is_input_image_given;
 const char* input_image;
 bool is_first_output_image_given;
-std::string first_output_image;
+const char* first_output_image;
 bool is_second_output_image_given;
-std::string second_output_image;
+const char* second_output_image;
 bool process_left_page;
 bool process_right_page;
 
@@ -144,8 +144,6 @@ int main(int argc, const char** argv)
     	//std::cout << "YES" << std::endl;
     	is_input_image_given = true;
     	input_image = args["<input_image>"].asString().c_str();
-    	//const char* tester_two = tester.c_str();
-    	//input_image
     } else {
     	//std::cout << "NO" << std::endl;
     	is_input_image_given = false;
@@ -154,7 +152,7 @@ int main(int argc, const char** argv)
     if(args["<output_image_one>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
     	//std::cout << "YES" << std::endl;
     	is_first_output_image_given = true;
-    	first_output_image = args["<output_image_one>"].asString();
+    	first_output_image = args["<output_image_one>"].asString().c_str();
     } else {
     	//std::cout << "NO" << std::endl;
     	is_first_output_image_given = false;
@@ -163,7 +161,7 @@ int main(int argc, const char** argv)
     if(args["<output_image_two>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
     	//std::cout << "YES" << std::endl;
     	is_second_output_image_given = true;
-    	second_output_image = args["<output_image_two>"].asString();
+    	second_output_image = args["<output_image_two>"].asString().c_str();
     } else {
     	//std::cout << "NO" << std::endl;
     	is_second_output_image_given = false;
@@ -228,13 +226,8 @@ int main(int argc, const char** argv)
 
     // Process if an input image is supplied; otherwise, open a webcam for
     // debugging.
-    if (argc > 3) {
-        //IplImage *src_img = cvLoadImage(argv[1]);
-        //const char* tester_three = "tester";
+    if (is_input_image_given) {
         IplImage *src_img = cvLoadImage(input_image);
-        
-        return 0; // Added by JL for debugging
-        
         
         if (src_img == NULL) {
             std::cerr << "Failed to load the source image specified.\n";
@@ -247,14 +240,14 @@ int main(int argc, const char** argv)
                 = book_img.create_page_image(left_dst_markers, left_layout);
         
         if (left_img != NULL) {
-            cvSaveImage(argv[4], left_img);
+            cvSaveImage(first_output_image, left_img);
             cvReleaseImage(&left_img);
         }
 
         IplImage *right_img
                 = book_img.create_page_image(right_dst_markers, right_layout);
         if (right_img != NULL) {
-            cvSaveImage(argv[5], right_img);
+            cvSaveImage(second_output_image, right_img);
             cvReleaseImage(&right_img);
         }
 
