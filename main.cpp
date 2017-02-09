@@ -81,13 +81,13 @@ R"(Bookscan.
 	  --offset-right-page-left-side=<offset_right_page_left_side>  Page offset, in the same units as page height and width. [default: 0.0]
 	  --offset-right-page-right-side=<offset_right_page_right_side>  Page offset, in the same units as page height and width. [default: 0.0]
 	  --offset-right-page-top-side=<offset_right_page_top_side>  Page offset, in the same units as page height and width. [default: 0.0]
-	  --offset-right-page-bottom-side=<offset_right_page_bottom_side> Page offset, in the same units as page height and width. [default: 0.0]
+	  --offset-right-page-bottom-side=<offset_right_page_bottom_side>  Page offset, in the same units as page height and width. [default: 0.0]
       
     Debugging mode:
       Running the program without any arguments will open a webcam window for real-time glyph detection (for calibration). If a webcam is found, this will cause a window to open, showing output from the webcam. When the four "left page" glyphs (i.e., glyphs 0, 1, 2, and 3) are detected by the webcam, a new window will open showing the de-keystoned image that the four glyphs surround. Similarly, when the four "right page" glyphs (i.e., glyphs 4, 5, 6, and 7) are detected by the webcam, an additional new window will open, showing the de-keystoned image for those four glyphs. Throughout this process, debugging text will be given in the terminal window, including which glyphs are detected.
       
     Placing markers:
-      Within the docs directory, you'll find PDF and Adobe Illustrator / Inkscape versions of a series of 15 "glyphs," small images that each comprises a unique pattern of pixels in a 6x6 grid. You'll need to print and cut out the glyphs; at the moment, only glyphs 0-3 (left page) and 4-7 (right page) are needed. Tape or otherwise affix the glyphs in clockwise order around the perimeter of each book page (for example, if you're using a glass or acrylic platen to flatten the pages of a book, affix the glyphs in each corner of the platen: starting at the top left and moving clockwise to the center/spine of the book, place glyphs 0, 1, 2, and 3 around the left page, and (again from top left and moving clockwise) glyphs 4, 5, 6, and 7 on the right page. The program will, by default, crop to the inside vertical, outside horizontal edge of the glyphs it detects. This can be changed using the offset arguments defined above.
+      Within the docs directory, you'll find PDF and Adobe Illustrator / Inkscape versions of a series of 15 "glyphs," small images that each comprises a unique pattern of pixels in a 6x6 grid. You'll need to print and cut out the glyphs; at the moment, only glyphs 0-3 (left page) and 4-7 (right page) are needed. Tape or otherwise affix the glyphs in clockwise order around the perimeter of each book page (for example, if you're using a glass or acrylic platen to flatten the pages of a book, affix the glyphs in each corner of the platen: starting at the top left and moving clockwise to the center/spine of the book, place glyphs 0, 1, 2, and 3 around the left page, and (again from top left and moving clockwise) glyphs 4, 5, 6, and 7 on the right page. The program will, by default, crop to the inside vertical, outside horizontal edge of the glyphs it detects. This can be adjusted using the offset arguments defined above. The offset arguments can be positive or negative (e.g., setting --offset-left-page-left-side to -0.5 will move the crop line to the left 0.5 units).
 )";
 
 /////////////////////////////////////////////
@@ -125,15 +125,30 @@ void process_image(IplImage *src_img,
 
 float page_width;
 float page_height;
+
 bool verbose;
+
 bool is_input_image_given;
 const char* input_image;
+
 bool is_first_output_image_given;
 const char* first_output_image;
+
 bool is_second_output_image_given;
 const char* second_output_image;
+
 bool process_left_page;
 bool process_right_page;
+
+float offset_left_page_left_side;
+float offset_left_page_right_side;
+float offset_left_page_top_side;
+float offset_left_page_bottom_side;
+
+float offset_right_page_left_side;
+float offset_right_page_right_side;
+float offset_right_page_top_side;
+float offset_right_page_bottom_side;
 
 int main(int argc, const char** argv)
 {
@@ -174,13 +189,22 @@ int main(int argc, const char** argv)
     page_height = stof(args["--page-height"].asString());
     page_width = stof(args["--page-width"].asString());
     
+    offset_left_page_left_side = stof(args["--offset-left-page-left-side"].asString());
+	offset_left_page_right_side = stof(args["--offset-left-page-right-side"].asString());
+	offset_left_page_top_side = stof(args["--offset-left-page-top-side"].asString());
+	offset_left_page_bottom_side = stof(args["--offset-left-page-bottom-side"].asString());
+	offset_right_page_left_side = stof(args["--offset-right-page-left-side"].asString());
+	offset_right_page_right_side = stof(args["--offset-right-page-right-side"].asString());
+	offset_right_page_top_side = stof(args["--offset-right-page-top-side"].asString());
+	offset_right_page_bottom_side = stof(args["--offset-right-page-bottom-side"].asString());
+    
     
     if(args["--input-image"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
-    	std::cout << "YES" << std::endl;
+    	std::cout << "Input image was given. Processing image..." << std::endl;
     	is_input_image_given = true;
     	input_image = args["--input-image"].asString().c_str();
     } else {
-    	std::cout << "NO" << std::endl;
+		std::cout << "Input image was *not* given. Thus, attempting to open webcam..." << std::endl;
     	is_input_image_given = false;
     }
     
@@ -212,18 +236,20 @@ int main(int argc, const char** argv)
     //////////////////////////
     
     // Configure left page. Glyph '0' is expected to be in the top left corner of the page. Glyph '1' is expected to be in the top right corner, etc. going clockwise.
+    // These points are in the form cvPoint2D32f(horizontal_location, vertical_location) in whatever units page_width and page_height are (what matters is their relation to each other, and not as much the units themselves, although larger units will mean larger output images).
     std::map<int, CvPoint2D32f> left_dst_markers;
-    left_dst_markers[0] = cvPoint2D32f(0.00, 0.00);
-    left_dst_markers[1] = cvPoint2D32f(page_width, 0.00);
-    left_dst_markers[2] = cvPoint2D32f(page_width, page_height);
-    left_dst_markers[3] = cvPoint2D32f(0.00, page_height);
+    left_dst_markers[0] = cvPoint2D32f(0.00 + offset_left_page_left_side, 0.00 + offset_left_page_top_side);
+    left_dst_markers[1] = cvPoint2D32f(page_width + offset_left_page_right_side, 0.00 + offset_left_page_top_side);
+    left_dst_markers[2] = cvPoint2D32f(page_width + offset_left_page_left_side, page_height + offset_left_page_bottom_side);
+    left_dst_markers[3] = cvPoint2D32f(0.00 + offset_left_page_right_side, page_height + offset_left_page_bottom_side);
     
     // Configure right page. Similar to the left page, Glyph '4' is expected to be in the top left corner of the page, with each higher-numbered glyph in the next corner, going around the page clockwise.
+    // See above in the "Configure left page" section re: the format of these points.
     std::map<int, CvPoint2D32f> right_dst_markers;
-    right_dst_markers[4] = cvPoint2D32f(0.00, 0.00);
-    right_dst_markers[5] = cvPoint2D32f(page_width, 0.00);
-    right_dst_markers[6] = cvPoint2D32f(page_width, page_height);
-    right_dst_markers[7] = cvPoint2D32f(0.00, page_height);
+    right_dst_markers[4] = cvPoint2D32f(0.00 + offset_right_page_left_side, 0.00 + offset_right_page_top_side);
+    right_dst_markers[5] = cvPoint2D32f(page_width + offset_right_page_right_side, 0.00 + offset_right_page_top_side);
+    right_dst_markers[6] = cvPoint2D32f(page_width + offset_right_page_left_side, page_height + offset_right_page_bottom_side);
+    right_dst_markers[7] = cvPoint2D32f(0.00 + offset_right_page_right_side, page_height + offset_right_page_bottom_side);
     
     // Define additional information about the pages:
     LayoutInfo left_layout;
@@ -253,7 +279,7 @@ int main(int argc, const char** argv)
 	    IplImage *src_img = cvLoadImage(input_image);
         
         if (src_img == NULL) {
-            std::cerr << "Error: Failed to load the source image specified.\n";
+            std::cerr << "Error: Failed to load the source image specified." << std::endl;
             return 1;
         }
 		
@@ -286,7 +312,7 @@ int main(int argc, const char** argv)
         // Open webcam.
         CvCapture* capture = cvCreateCameraCapture(0);
         if (!capture) {
-            std::cerr << "Failed to load the camera device.\n";
+            std::cerr << "Failed to load the camera device." << std::endl;
             return 1;
         }
         const double scale = 1.0;
