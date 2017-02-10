@@ -285,21 +285,25 @@ int main(int argc, const char** argv)
         
         BookImage book_img(src_img);
         
-        IplImage *left_img
-                = book_img.create_page_image(left_dst_markers, left_layout);
-        
-        if (left_img != NULL) {
-            cvSaveImage(first_output_image, left_img);
-            cvReleaseImage(&left_img);
+        if (process_left_page == true) {
+	        IplImage *left_img
+	                = book_img.create_page_image(left_dst_markers, left_layout);
+	        
+	        if (left_img != NULL) {
+	            cvSaveImage(first_output_image, left_img);
+	            cvReleaseImage(&left_img);
+	        }
         }
         
-        IplImage *right_img
-                = book_img.create_page_image(right_dst_markers, right_layout);
-        if (right_img != NULL) {
-            cvSaveImage(second_output_image, right_img);
-            cvReleaseImage(&right_img);
-        }
-        return 0;
+        if (process_right_page == true) {
+	        IplImage *right_img
+	                = book_img.create_page_image(right_dst_markers, right_layout);
+	        if (right_img != NULL) {
+	            cvSaveImage(second_output_image, right_img);
+	            cvReleaseImage(&right_img);
+	        }
+	    }
+	    
         cvReleaseImage(&src_img);
     } else { // Open debugging windows
         // Create windows.
