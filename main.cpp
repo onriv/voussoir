@@ -104,7 +104,7 @@ void process_image(IplImage *src_img,
         std::map<int, CvPoint2D32f> &right_dst_markers,
         LayoutInfo right_layout)
 {
-	if(verbose == true){std::cout << "Since this is webcam mode, beginning to look for both left and right page markers (whether or not we have been told to ignore markers for left and/or right pages)..." << std::endl;} // Remind the user that the --no-left-page and --no-right-page arguments don't make a difference in webcam mode.
+	std::cout << "Since this is webcam mode, beginning to look for both left and right page markers (whether or not we have been told to ignore markers for left and/or right pages)..." << std::endl; // Remind the user that the --no-left-page and --no-right-page arguments don't make a difference in webcam mode.
 	
     BookImage book_image(src_img);
 
@@ -130,7 +130,7 @@ void process_image(IplImage *src_img,
 float page_width;
 float page_height;
 
-float dpi;
+float dpi_for_output_images;
 
 bool verbose;
 
@@ -242,7 +242,7 @@ int main(int argc, const char** argv)
     
     // Configure left page. Glyph '0' is expected to be in the top left corner of the page. Glyph '1' is expected to be in the top right corner, etc. going clockwise.
     // These points are in the form cvPoint2D32f(horizontal_location, vertical_location) in whatever units page_width and page_height are (what matters is their relation to each other, and not as much the units themselves, although larger units will mean larger output images).
-    if(verbose == true){std::cout << "Initializing left page..." << std::endl;}
+    if(verbose == true && process_left_page == true){std::cout << "Initializing left page..." << std::endl;}
     std::map<int, CvPoint2D32f> left_dst_markers;
     left_dst_markers[0] = cvPoint2D32f(0.00, 0.00);
     left_dst_markers[1] = cvPoint2D32f(page_width, 0.00);
@@ -251,7 +251,7 @@ int main(int argc, const char** argv)
     
     // Configure right page. Similar to the left page, Glyph '4' is expected to be in the top left corner of the page, with each higher-numbered glyph in the next corner, going around the page clockwise.
     // See above in the "Configure left page" section re: the format of these points.
-    if(verbose == true){std::cout << "Initializing right page..." << std::endl;}
+    if(verbose == true && process_right_page == true){std::cout << "Initializing right page..." << std::endl;}
     std::map<int, CvPoint2D32f> right_dst_markers;
     right_dst_markers[4] = cvPoint2D32f(0.00, 0.00);
     right_dst_markers[5] = cvPoint2D32f(page_width, 0.00);
@@ -293,6 +293,8 @@ int main(int argc, const char** argv)
         BookImage book_img(src_img);
         
         if (process_left_page == true) {
+        	if(verbose == true){std::cout << "Processing left page..." << std::endl;}
+        	
 	        IplImage *left_img
 	                = book_img.create_page_image(left_dst_markers, left_layout);
 	        
@@ -303,6 +305,8 @@ int main(int argc, const char** argv)
         }
         
         if (process_right_page == true) {
+        	if(verbose == true){std::cout << "Processing right page..." << std::endl;}
+        	
 	        IplImage *right_img
 	                = book_img.create_page_image(right_dst_markers, right_layout);
 	        if (right_img != NULL) {
