@@ -44,8 +44,8 @@
 static const char USAGE[] =
 R"(Bookscan.
     Description:
-	  This program takes images of books (each picture including a two-page spread), detects special glyphs pasted in the corners of the book, and de-keystones and thereby digitally flattens the pages. It then automatically separates the pages into separate, cropped image files.
-	
+      This program takes images of books (each picture including a two-page spread), detects special glyphs pasted in the corners of the book, and de-keystones and thereby digitally flattens the pages. It then automatically separates the pages into separate, cropped image files.
+    
     Usage:
       bookscan
       
@@ -74,14 +74,14 @@ R"(Bookscan.
       <output_image_two>  If relevant, the second output image (see <output_image_one> above).
       
       --offset-left-page-left-side=<offset_left_page_left_side>  Page offset, in the same units as page height and width. [default: 0.00]
-	  --offset-left-page-right-side=<offset_left_page_right_side>  Page offset, in the same units as page height and width. [default: 0.00]
-	  --offset-left-page-top-side=<offset_left_page_top_side>  Page offset, in the same units as page height and width. [default: 0.00]
-	  --offset-left-page-bottom-side=<offset_left_page_bottom_side>  Page offset, in the same units as page height and width. [default: 0.00]
-	  
-	  --offset-right-page-left-side=<offset_right_page_left_side>  Page offset, in the same units as page height and width. [default: 0.00]
-	  --offset-right-page-right-side=<offset_right_page_right_side>  Page offset, in the same units as page height and width. [default: 0.00]
-	  --offset-right-page-top-side=<offset_right_page_top_side>  Page offset, in the same units as page height and width. [default: 0.00]
-	  --offset-right-page-bottom-side=<offset_right_page_bottom_side>  Page offset, in the same units as page height and width. [default: 0.00]
+      --offset-left-page-right-side=<offset_left_page_right_side>  Page offset, in the same units as page height and width. [default: 0.00]
+      --offset-left-page-top-side=<offset_left_page_top_side>  Page offset, in the same units as page height and width. [default: 0.00]
+      --offset-left-page-bottom-side=<offset_left_page_bottom_side>  Page offset, in the same units as page height and width. [default: 0.00]
+      
+      --offset-right-page-left-side=<offset_right_page_left_side>  Page offset, in the same units as page height and width. [default: 0.00]
+      --offset-right-page-right-side=<offset_right_page_right_side>  Page offset, in the same units as page height and width. [default: 0.00]
+      --offset-right-page-top-side=<offset_right_page_top_side>  Page offset, in the same units as page height and width. [default: 0.00]
+      --offset-right-page-bottom-side=<offset_right_page_bottom_side>  Page offset, in the same units as page height and width. [default: 0.00]
       
     Debugging mode:
       Running the program without any arguments will open a webcam window for real-time glyph detection (for calibration). If a webcam is found, this will cause a window to open, showing output from the webcam. When the four "left page" glyphs (i.e., glyphs 0, 1, 2, and 3) are detected by the webcam, a new window will open showing the de-keystoned image that the four glyphs surround. Similarly, when the four "right page" glyphs (i.e., glyphs 4, 5, 6, and 7) are detected by the webcam, an additional new window will open, showing the de-keystoned image for those four glyphs. Throughout this process, debugging text will be given in the terminal window, including which glyphs are detected.
@@ -169,11 +169,11 @@ int main(int argc, const char** argv)
     /////////////
     
     // Examples for argument parsing:
-    	// std::string example = args["--example_argument"].asString(); // String
-    	// float example = stof(args["--example_argument"].asString()); // Float
-    	// bool example = args["--example_argument"].asBool(); // Boolean
+        // std::string example = args["--example_argument"].asString(); // String
+        // float example = stof(args["--example_argument"].asString()); // Float
+        // bool example = args["--example_argument"].asBool(); // Boolean
 
-	verbose = args["--verbose"].asBool();
+    verbose = args["--verbose"].asBool();
     
     if(verbose == true){ // If we've been asked to be verbose, print info. about each option that the program accepts (in the form "Name: 'Value'"):
         std::cout << "Verbose mode is turned on." << std::endl;
@@ -190,40 +190,40 @@ int main(int argc, const char** argv)
     page_width = stof(args["--page-width"].asString());
     
     offset_left_page_left_side = stof(args["--offset-left-page-left-side"].asString());
-	offset_left_page_right_side = stof(args["--offset-left-page-right-side"].asString());
-	offset_left_page_top_side = stof(args["--offset-left-page-top-side"].asString());
-	offset_left_page_bottom_side = stof(args["--offset-left-page-bottom-side"].asString());
-	offset_right_page_left_side = stof(args["--offset-right-page-left-side"].asString());
-	offset_right_page_right_side = stof(args["--offset-right-page-right-side"].asString());
-	offset_right_page_top_side = stof(args["--offset-right-page-top-side"].asString());
-	offset_right_page_bottom_side = stof(args["--offset-right-page-bottom-side"].asString());
+    offset_left_page_right_side = stof(args["--offset-left-page-right-side"].asString());
+    offset_left_page_top_side = stof(args["--offset-left-page-top-side"].asString());
+    offset_left_page_bottom_side = stof(args["--offset-left-page-bottom-side"].asString());
+    offset_right_page_left_side = stof(args["--offset-right-page-left-side"].asString());
+    offset_right_page_right_side = stof(args["--offset-right-page-right-side"].asString());
+    offset_right_page_top_side = stof(args["--offset-right-page-top-side"].asString());
+    offset_right_page_bottom_side = stof(args["--offset-right-page-bottom-side"].asString());
     
     
     if(args["--input-image"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
-    	std::cout << "Input image was given. Processing image..." << std::endl;
-    	is_input_image_given = true;
-    	input_image = args["--input-image"].asString().c_str();
+        std::cout << "Input image was given. Processing image..." << std::endl;
+        is_input_image_given = true;
+        input_image = args["--input-image"].asString().c_str();
     } else {
-		std::cout << "Input image was *not* given. Thus, attempting to open webcam..." << std::endl;
-    	is_input_image_given = false;
+        std::cout << "Input image was *not* given. Thus, attempting to open webcam..." << std::endl;
+        is_input_image_given = false;
     }
     
     if(args["<output_image_one>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
-    	//std::cout << "YES" << std::endl;
-    	is_first_output_image_given = true;
-    	first_output_image = args["<output_image_one>"].asString().c_str();
+        //std::cout << "YES" << std::endl;
+        is_first_output_image_given = true;
+        first_output_image = args["<output_image_one>"].asString().c_str();
     } else {
-    	//std::cout << "NO" << std::endl;
-    	is_first_output_image_given = false;
+        //std::cout << "NO" << std::endl;
+        is_first_output_image_given = false;
     }
     
     if(args["<output_image_two>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
-    	//std::cout << "YES" << std::endl;
-    	is_second_output_image_given = true;
-    	second_output_image = args["<output_image_two>"].asString().c_str();
+        //std::cout << "YES" << std::endl;
+        is_second_output_image_given = true;
+        second_output_image = args["<output_image_two>"].asString().c_str();
     } else {
-    	//std::cout << "NO" << std::endl;
-    	is_second_output_image_given = false;
+        //std::cout << "NO" << std::endl;
+        is_second_output_image_given = false;
     }
     
     process_left_page = ! args["--no-left-page"].asBool(); // Make this a positive question ("Do we process the left page?") by flipping it with '~' from the assertion "Do not process the left page."
@@ -275,16 +275,16 @@ int main(int argc, const char** argv)
     // Process if an input image is supplied; otherwise, open a webcam for
     // debugging.
     if (is_input_image_given == true) {
-		
-	    IplImage *src_img = cvLoadImage(input_image);
+        
+        IplImage *src_img = cvLoadImage(input_image);
         
         if (src_img == NULL) {
             std::cerr << "Error: Failed to load the source image specified." << std::endl;
             return 1;
         }
-		
+        
         BookImage book_img(src_img);
-		
+        
         IplImage *left_img
                 = book_img.create_page_image(left_dst_markers, left_layout);
         
@@ -292,14 +292,14 @@ int main(int argc, const char** argv)
             cvSaveImage(first_output_image, left_img);
             cvReleaseImage(&left_img);
         }
-		
+        
         IplImage *right_img
                 = book_img.create_page_image(right_dst_markers, right_layout);
         if (right_img != NULL) {
             cvSaveImage(second_output_image, right_img);
             cvReleaseImage(&right_img);
         }
-		return 0;
+        return 0;
         cvReleaseImage(&src_img);
     } else { // Open debugging windows
         // Create windows.

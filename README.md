@@ -85,12 +85,14 @@ Do note that the program only transforms the pages as two-dimensional objects; t
 
 ## Using the Program
 
-The program takes three basic arguments:
+The program takes five basic arguments:
 
-`./bookscan -i test_input.jpg output_left.jpg output_right.jpg`
+`./bookscan --input-image --page-height 10 --page-width 6 test_input.jpg output_left.jpg output_right.jpg`
 
-where test_input.jpg is the input file name, and the following two are the
-output file names.
+In this example, `test_input.jpg` is the input file name, and the final two arguments are the
+output file names. The page is 10 units high and 6 units wide (these can be inches or any other unit -- what matters is their relation to each other). If you do not specify a height and width, they will default to 9.5 and 6, respectively.
+
+Run `./bin/bookscan --help` to see additional options for making cropping adjustments to each edge of each page, and for specifying that you only want to process a left page or right page (vs. both pages).
 
 ### Debugging using a Webcam
 
