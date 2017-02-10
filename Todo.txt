@@ -1,2 +1,0 @@
-* Incorporate process_left_page and process_right_page boolean checks.
-* Add verbose debugging output throughout.

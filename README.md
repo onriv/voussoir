@@ -119,10 +119,15 @@ The Example_Images directory in this repository contains two example scripts.
 
 # Todo
 
-* Add help documentation to the program itself (allowing a command-line `--help / -h` flag)
+## Immediate Priority
+
+* Incorporate process_left_page and process_right_page boolean checks.
+* Add verbose debugging output throughout.
+
+## Non-Immediate Priority
+
 * Add command-line flags for the following:
 	* Show detected glyph pattern in debugging mode
-	* Show page width and height (perhaps with a `--verbose / -v` flag)
 * Establish a build process to allow distributing ready-to-use binaries for different platforms (including the major Linux distros 32- and 64-bit, OSX 64-bit, and Windows)
 * **Get more people on board!** I (Jacob) am not a C++ developer, so I see my role as primarily custodial right now (i.e., working on documentation and community-building).
 * Craft a more accurate, clever, and less generic name for the program.
