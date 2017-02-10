@@ -85,7 +85,7 @@ Do note that the program only transforms the pages as two-dimensional objects; t
 
 ## Using the Program
 
-The program takes five basic arguments:
+The program takes six basic arguments:
 
 `./bookscan --input-image --page-height 10 --page-width 6 test_input.jpg output_left.jpg output_right.jpg`
 
