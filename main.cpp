@@ -55,7 +55,7 @@ R"(Bookscan.
       
       bookscan [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
       
-      bookscan [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [--offset-left-page-left-side <offset_left_page_left_side>] [--offset-left-page-right-side <offset_left_page_right_side>] [--offset-left-page-top-side <offset_left_page_top_side>] [--offset-left-page-bottom-side <offset_left_page_bottom_side>] [--offset-right-page-left-side <offset_right_page_left_side>] [--offset-right-page-right-side <offset_right_page_right_side>] [--offset-right-page-top-side <offset_right_page_top_side>] [--offset-right-page-bottom-side <offset_right_page_bottom_side>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
+      bookscan [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [-d <dpi>] [--offset-left-page-left-side <offset_left_page_left_side>] [--offset-left-page-right-side <offset_left_page_right_side>] [--offset-left-page-top-side <offset_left_page_top_side>] [--offset-left-page-bottom-side <offset_left_page_bottom_side>] [--offset-right-page-left-side <offset_right_page_left_side>] [--offset-right-page-right-side <offset_right_page_right_side>] [--offset-right-page-top-side <offset_right_page_top_side>] [--offset-right-page-bottom-side <offset_right_page_bottom_side>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
 
     Options:
       -h --help     Show this screen.
@@ -67,6 +67,8 @@ R"(Bookscan.
       -w --page-width=<page_width_argument>  Width of each page (in any metric). [default: 6.0]
       --no-left-page  Only process right-side pages (Markers 0-3).
       --no-right-page  Only process left-side pages (Markers 4-7).
+      
+      -d --dpi=<dpi>  The DPI level at which to save the output images. [default: 600.0]
       
       -i --input-image=<input_image>  The input image.
       
@@ -102,6 +104,8 @@ void process_image(IplImage *src_img,
         std::map<int, CvPoint2D32f> &right_dst_markers,
         LayoutInfo right_layout)
 {
+	if(verbose == true){std::cout << "Since this is webcam mode, beginning to look for both left and right page markers (whether or not we have been told to ignore markers for left and/or right pages)..." << std::endl;} // Remind the user that the --no-left-page and --no-right-page arguments don't make a difference in webcam mode.
+	
     BookImage book_image(src_img);
 
     {
@@ -125,6 +129,8 @@ void process_image(IplImage *src_img,
 
 float page_width;
 float page_height;
+
+float dpi;
 
 bool verbose;
 
@@ -185,9 +191,12 @@ int main(int argc, const char** argv)
         }
     }
     
+    if(verbose == true){std::cout << "Parsing command line arguments..." << std::endl;}
     
     page_height = stof(args["--page-height"].asString());
     page_width = stof(args["--page-width"].asString());
+    
+    dpi_for_output_images = stof(args["--dpi"].asString());
     
     offset_left_page_left_side = stof(args["--offset-left-page-left-side"].asString());
     offset_left_page_right_side = stof(args["--offset-left-page-right-side"].asString());
@@ -204,25 +213,21 @@ int main(int argc, const char** argv)
         is_input_image_given = true;
         input_image = args["--input-image"].asString().c_str();
     } else {
-        std::cout << "Input image was *not* given. Thus, attempting to open webcam..." << std::endl;
+        std::cout << "Input image was *not* given. Thus, we will attempt to open a webcam for real-time calibration..." << std::endl;
         is_input_image_given = false;
     }
     
     if(args["<output_image_one>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
-        //std::cout << "YES" << std::endl;
         is_first_output_image_given = true;
         first_output_image = args["<output_image_one>"].asString().c_str();
     } else {
-        //std::cout << "NO" << std::endl;
         is_first_output_image_given = false;
     }
     
     if(args["<output_image_two>"]){ // If a value has been set (i.e., is not null) is its default (just a space), treat it as not having been set.
-        //std::cout << "YES" << std::endl;
         is_second_output_image_given = true;
         second_output_image = args["<output_image_two>"].asString().c_str();
     } else {
-        //std::cout << "NO" << std::endl;
         is_second_output_image_given = false;
     }
     
@@ -237,6 +242,7 @@ int main(int argc, const char** argv)
     
     // Configure left page. Glyph '0' is expected to be in the top left corner of the page. Glyph '1' is expected to be in the top right corner, etc. going clockwise.
     // These points are in the form cvPoint2D32f(horizontal_location, vertical_location) in whatever units page_width and page_height are (what matters is their relation to each other, and not as much the units themselves, although larger units will mean larger output images).
+    if(verbose == true){std::cout << "Initializing left page..." << std::endl;}
     std::map<int, CvPoint2D32f> left_dst_markers;
     left_dst_markers[0] = cvPoint2D32f(0.00, 0.00);
     left_dst_markers[1] = cvPoint2D32f(page_width, 0.00);
@@ -245,6 +251,7 @@ int main(int argc, const char** argv)
     
     // Configure right page. Similar to the left page, Glyph '4' is expected to be in the top left corner of the page, with each higher-numbered glyph in the next corner, going around the page clockwise.
     // See above in the "Configure left page" section re: the format of these points.
+    if(verbose == true){std::cout << "Initializing right page..." << std::endl;}
     std::map<int, CvPoint2D32f> right_dst_markers;
     right_dst_markers[4] = cvPoint2D32f(0.00, 0.00);
     right_dst_markers[5] = cvPoint2D32f(page_width, 0.00);
@@ -254,8 +261,8 @@ int main(int argc, const char** argv)
     // Define additional information about the pages:
     LayoutInfo left_layout;
     LayoutInfo right_layout;
-    left_layout.dpi = 600.0;
-    right_layout.dpi = 600.0;
+    left_layout.dpi = dpi_for_output_images;
+    right_layout.dpi = dpi_for_output_images;
     
     // The image will automatically be cropped to the outside width of the glyphs, and the inside height of the glyphs (i.e., the longest width between glyphs, and the shortest height between glyphs.
     // Here, then, you can define offsets (+ or -) if, for example, you want to bring in the image more (if the glyphs are printed on a piece of paper, e.g.).
