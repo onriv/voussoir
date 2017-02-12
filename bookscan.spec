@@ -34,16 +34,24 @@ make
 %install
 mkdir --parents $RPM_BUILD_ROOT/usr/bin
 
-install --strip --mode=755 $RPM_BUILD_DIR/bookscan-Adding_Support_for_OpenSUSE_Build_Service/bin/bookscan $RPM_BUILD_ROOT/usr/bin/bookscan
+install --strip --mode=755 $RPM_BUILD_DIR/bookscan-Adding_Support_for_OpenSUSE_Build_Service/bin/bookscan $RPM_BUILD_ROOT/usr/bin/%{name}
+
+mkdir --parents $RPM_BUILD_ROOT/usr/share/%{name}
+
+install -D --mode=444 $RPM_BUILD_DIR/bookscan-Adding_Support_for_OpenSUSE_Build_Service/bin/docs/markers_for_book_scanner.pdf $RPM_BUILD_ROOT/usr/share/%{name}/markers_for_book_scanner.pdf
+
+install -D --mode=444 $RPM_BUILD_DIR/bookscan-Adding_Support_for_OpenSUSE_Build_Service/bin/docs/markers_for_book_scanner.ai $RPM_BUILD_ROOT/usr/share/%{name}/markers_for_book_scanner.ai
 
 %%clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-# doc bin/docs/markers_for_book_scanner.pdf bin/docs/markers_for_book_scanner.ai bin/docs/Example_Images/test_input.jpg
+%doc /usr/share/%{name}/markers_for_book_scanner.pdf 
+%doc /usr/share/%{name}/markers_for_book_scanner.ai
 
 /usr/bin/bookscan
+%dir /usr/share/%{name}
 
 %changelog
 * Fri Feb 10 2017 Jacob Levernier <j@adunumdatum.org> 0.1-1
