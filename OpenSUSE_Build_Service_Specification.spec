@@ -8,8 +8,8 @@ Summary:        A single-camera solution for book scanning.
 #Group:          
 License:        ISC
 URL:            https://github.com/publicus/bookscan
-Source0:        https://github.com/publicus/bookscan/archive/Adding_Page_Size_as_Command_Line_Argument.tar.gz
-#BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Source0:        %{BuildRoot}/bookscan-Adding_Support_for_OpenSUSE_Build_Service.tar.gz
+BuildRoot:      %{_tmppath}/bookscan-Adding_Support_for_OpenSUSE_Build_Service
 
 BuildRequires:  cmake
 BuildRequires:  opencv
@@ -37,20 +37,18 @@ make
 #make check
 
 #%install
-#rm -rf $RPM_BUILD_ROOT
-#make install DESTDIR=$RPM_BUILD_ROOT
 
 
 #%clean
-#rm -rf $RPM_BUILD_ROOT
+rm -rf %{BuildRoot}
 
 
 %files
 #%defattr(-,root,root,-)
 
-%doc markers_for_book_scanner.pdf markers_for_book_scanner.ai test_input.jpg
+#%doc markers_for_book_scanner.pdf markers_for_book_scanner.ai test_input.jpg
 
 %changelog
-* 2017-02-10 Jacob Levernier <j@adunumdatum.org> 0.1-1
+* Fri Feb 10 2017 Jacob Levernier <j@adunumdatum.org> 0.1-1
 - Added Specfile
 
