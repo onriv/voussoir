@@ -120,7 +120,7 @@ The Example_Images directory in this repository contains two example scripts.
 # Todo
 
 * Add a command line option (perhaps '-a --list-of-images-with-alert-glyph <file_name>') for scanning workflows that involve occasional non-standard page sizes (for example, for books with inserts). The option would cause the program to behave differently if it recognizes an additional glyph (e.g., glyph #8 in the markers .pdf and .ai files); when the glyph is recognized, the input image name would be appended to a text file. 
-    * This would allow a scanner operator to take a picture of the book with image inserts extended, etc., but to temporarily affix the "alert" glyph anywhere near the book, and then remove the glyph and move on to the next pages of the book. This would simply the process for going back and separately processing those non-standard pages later.
+    * This would allow a scanner operator to take a picture of the book with image inserts extended, etc., but to temporarily affix the "alert" glyph anywhere near the book, and then remove the glyph and move on to the next pages of the book. This would simplify the process for going back and separately processing those non-standard pages later.
     * This could be defined in a separate function ("is_alert_glyph_present") called from main.cpp near where the page processing function is called for the left and right pages.
 * Establish a build process to allow distributing ready-to-use binaries for different platforms (including the major Linux distros 32- and 64-bit, OSX 64-bit, and Windows)
 * **Get more people on board!** I (Jacob) am not a C++ developer, so I see my role as primarily custodial right now (i.e., working on documentation and community-building).
