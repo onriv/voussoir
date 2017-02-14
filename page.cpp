@@ -55,8 +55,10 @@ BookImage::BookImage(const IplImage *src_img) : src_img(cvCloneImage(src_img))
         if (marker_id != -1) {
 			if(marker_id == 8){ // The "Alert" marker for the left page.
 				std::cout << "Marker #8 (the 'Alert' marker for the left page) found..." << std::endl;
+				alert_marker_present[marker_id] = true;
 			} else if (marker_id == 9){ // The "Alert" marker for the right page.
-				std::cout << "Marker #8 (the 'Alert' marker for the right page) found..." << std::endl;
+				std::cout << "Marker #9 (the 'Alert' marker for the right page) found..." << std::endl;
+				alert_marker_present[marker_id] = true;
 			} else {
 	            src_markers[marker_id] = points[0];
 			}

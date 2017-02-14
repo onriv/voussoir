@@ -39,6 +39,7 @@ class BookImage
 private:
     IplImage *src_img;
     std::map<int, CvPoint2D32f> src_markers;
+    std::map<int, bool> alert_marker_present;
 
 public:
     BookImage(const IplImage *src_img);
