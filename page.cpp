@@ -53,7 +53,13 @@ BookImage::BookImage(const IplImage *src_img) : src_img(cvCloneImage(src_img))
         CvPoint2D32f points[4];
         int marker_id = analyze_marker(gray_img, poly, points);
         if (marker_id != -1) {
-            src_markers[marker_id] = points[0];
+			if(marker_id == 8){ // The "Alert" marker for the left page.
+				std::cout << "Marker #8 (the 'Alert' marker for the left page) found..." << std::endl;
+			} else if (marker_id == 9){ // The "Alert" marker for the right page.
+				std::cout << "Marker #8 (the 'Alert' marker for the right page) found..." << std::endl;
+			} else {
+	            src_markers[marker_id] = points[0];
+			}
         }
     }
 
