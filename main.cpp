@@ -156,8 +156,13 @@ float offset_right_page_right_side;
 float offset_right_page_top_side;
 float offset_right_page_bottom_side;
 
+#include <fstream> // For writing to an output text file.
+
 int main(int argc, const char** argv)
 {
+	std::ofstream outfile;
+	outfile.open("/home/jacoblevernier/Downloads/bookscan_output/test.txt", std::ios_base::app);
+	
     //////////////////////////
     // Parse command-line options with docopt
     //////////////////////////
@@ -183,6 +188,7 @@ int main(int argc, const char** argv)
     
     if(verbose == true){ // If we've been asked to be verbose, print info. about each option that the program accepts (in the form "Name: 'Value'"):
         std::cout << "Verbose mode is turned on." << std::endl;
+		outfile << "Verbose mode is turned on." << std::endl;
         
         std::cout << "Program options and their current settings:" << std::endl;
         

@@ -18,9 +18,6 @@
 #include <iostream>
 #include <map>
 
-//#include <cstring>
-//#include <stdio.h>
-
 #include "page.h"
 #include "marker.h"
 
