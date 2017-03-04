@@ -1,4 +1,4 @@
-bookscan
+voussoir
 ========
 
 A single-camera solution for book scanning.
@@ -69,7 +69,7 @@ cmake ./
 make
 ```
 
-The binary executable will be saved under `./bin/bookscan`.
+The binary executable will be saved under `./bin/voussoir`.
 
 # Usage
 
@@ -87,19 +87,19 @@ Do note that the program only transforms the pages as two-dimensional objects; t
 
 The program takes six basic arguments:
 
-`./bookscan --input-image --page-height 10 --page-width 6 test_input.jpg output_left.jpg output_right.jpg`
+`./voussoir --input-image --page-height 10 --page-width 6 test_input.jpg output_left.jpg output_right.jpg`
 
 In this example, `test_input.jpg` is the input file name, and the final two arguments are the
 output file names. The page is 10 units high and 6 units wide (these can be inches or any other unit -- what matters is their relation to each other). If you do not specify a height and width, they will default to 9.5 and 6, respectively.
 
-Run `./bin/bookscan --help` to see additional options for making cropping adjustments to each edge of each page, and for specifying that you only want to process a left page or right page (vs. both pages).
+Run `./bin/voussoir --help` to see additional options for making cropping adjustments to each edge of each page, and for specifying that you only want to process a left page or right page (vs. both pages).
 
 ### Debugging using a Webcam
 
 To debug using a webcam, execute the program without an argument:
 
 ```
-./bookscan
+./voussoir
 ```
 
 If a webcam is found, this will cause a window to open, showing output from the webcam. When the four "left page" glyphs (i.e., glyphs 0, 1, 2, and 3) are detected by the webcam, a new window will open showing the de-keystoned image that the four glyphs surround. Similarly, when the four "right page" glyphs (i.e., glyphs 4, 5, 6, and 7) are detected by the webcam, an additional new window will open, showing the de-keystoned image for those four glyphs. Throughout this process, debugging text will be given in the terminal window, including which glyphs are detected.

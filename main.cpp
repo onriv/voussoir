@@ -42,20 +42,20 @@
 /////////////////////////////////////////////
  
 static const char USAGE[] =
-R"(Bookscan.
+R"(voussoir.
     Description:
       This program takes images of books (each picture including a two-page spread), detects special glyphs pasted in the corners of the book, and de-keystones and thereby digitally flattens the pages. It then automatically separates the pages into separate, cropped image files.
     
     Usage:
-      bookscan
+      voussoir
       
-      bookscan (-h | --help)
+      voussoir (-h | --help)
       
-      bookscan (-v | --version)
+      voussoir (-v | --version)
       
-      bookscan [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
+      voussoir [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
       
-      bookscan [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [-d <dpi>] [--offset-left-page-left-side <offset_left_page_left_side>] [--offset-left-page-right-side <offset_left_page_right_side>] [--offset-left-page-top-side <offset_left_page_top_side>] [--offset-left-page-bottom-side <offset_left_page_bottom_side>] [--offset-right-page-left-side <offset_right_page_left_side>] [--offset-right-page-right-side <offset_right_page_right_side>] [--offset-right-page-top-side <offset_right_page_top_side>] [--offset-right-page-bottom-side <offset_right_page_bottom_side>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
+      voussoir [--verbose] [--no-left-page] [--no-right-page] [-w <page_width_argument>] [-t <page_height_argument>] [-d <dpi>] [--offset-left-page-left-side <offset_left_page_left_side>] [--offset-left-page-right-side <offset_left_page_right_side>] [--offset-left-page-top-side <offset_left_page_top_side>] [--offset-left-page-bottom-side <offset_left_page_bottom_side>] [--offset-right-page-left-side <offset_right_page_left_side>] [--offset-right-page-right-side <offset_right_page_right_side>] [--offset-right-page-top-side <offset_right_page_top_side>] [--offset-right-page-bottom-side <offset_right_page_bottom_side>] [-i <input_image>] [<output_image_one>] [<output_image_two>]
 
     Options:
       -h --help     Show this screen.
@@ -166,7 +166,7 @@ int main(int argc, const char** argv)
              USAGE,
              { argv + 1, argv + argc },
              true, // show help if requested
-             "Bookscan 0.1" // version string
+             "voussoir 0.2" // version string
           );
     // To extract arguments, you can use the form 'args["--page-height"].asLong()'. See https://github.com/docopt/docopt.cpp/issues/8 for an offhand example. The values are normally strings. asBool() and asLong() can be used to transform them into boolean and numbers, respectively.
     

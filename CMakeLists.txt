@@ -1,22 +1,22 @@
 cmake_minimum_required(VERSION 2.8)
 
-PROJECT(bookscan CXX)
+PROJECT(voussoir CXX)
 
 set(ROOT ./)
 
 include_directories(${ROOT})
 
-ADD_EXECUTABLE(bookscan main.cpp marker.cpp page.cpp)
+ADD_EXECUTABLE(voussoir main.cpp marker.cpp page.cpp)
 
 FIND_PACKAGE(OpenCV REQUIRED)
 
-TARGET_LINK_LIBRARIES(bookscan ${OpenCV_LIBS})
+TARGET_LINK_LIBRARIES(voussoir ${OpenCV_LIBS})
 
 ##############
 # For getting docopt to work
 ##############
 
-target_compile_definitions(bookscan PRIVATE DOCOPT_HEADER_ONLY=1) # This is added because of an if statement at the bottom of docopt.h -- this enables actually including docopt.cpp from docopt.h.
+target_compile_definitions(voussoir PRIVATE DOCOPT_HEADER_ONLY=1) # This is added because of an if statement at the bottom of docopt.h -- this enables actually including docopt.cpp from docopt.h.
 set(CMAKE_CXX_FLAGS "-std=c++11") # docopt needs this, per https://github.com/Qihoo360/logkafka/issues/1
 
 ##############
