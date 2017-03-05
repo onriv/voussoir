@@ -20,7 +20,7 @@
 directory_to_watch="/home/jacoblevernier/Downloads/test"
 output_directory="/home/jacoblevernier/Downloads/test/output"
 
-program_location="/home/jacoblevernier/Downloads/bookscan/bin/bookscan"
+program_location="/home/jacoblevernier/Downloads/bookscan/bin/voussoir"
 
 program_arguments="--verbose"
 

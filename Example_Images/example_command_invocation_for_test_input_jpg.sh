@@ -1,4 +1,4 @@
-./bin/bookscan \
+./bin/voussoir \
 --verbose \
 --offset-left-page-left-side 0.3 \
 --offset-left-page-right-side 0.3 \
@@ -9,5 +9,5 @@
 --offset-right-page-top-side 0.25 \
 --offset-right-page-bottom-side -0.2 \
 -i bin/docs/test_input.jpg \
-~/Downloads/bookscan_output/test1.jpg \
-~/Downloads/bookscan_output/test2.jpg
+~/Downloads/voussoir_output/test1.jpg \
+~/Downloads/voussoir_output/test2.jpg
