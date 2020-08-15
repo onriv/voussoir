@@ -135,6 +135,7 @@ The Example_Images directory in this repository contains two example scripts.
     * This could be defined in a separate function ("is_alert_glyph_present") called from main.cpp near where the page processing function is called for the left and right pages.
 * Establish a build process to allow distributing ready-to-use binaries for different platforms (including the major Linux distros 32- and 64-bit, OSX 64-bit, and Windows)
 * **Get more people on board!** I (Jacob) am not a C++ developer, so I see my role as primarily custodial right now (i.e., working on documentation and community-building).
+    * **Hannes Künsebeck has written [a port of Voussoir to Python called `pyvoussoir`](https://github.com/hnesk/pyvoussoir). That project is likely to be more maintained than this one.**
 
 # Contributors (in reverse-chronological order)
 
