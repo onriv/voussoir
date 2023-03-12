@@ -8,6 +8,7 @@ include_directories(${ROOT})
 
 ADD_EXECUTABLE(voussoir main.cpp marker.cpp page.cpp)
 
+set(OpenCV_DIR /usr/local/Cellar/opencv@3/3.4.14_3/share/OpenCV/)
 FIND_PACKAGE(OpenCV REQUIRED)
 
 TARGET_LINK_LIBRARIES(voussoir ${OpenCV_LIBS})
